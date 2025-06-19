@@ -32,7 +32,7 @@ Resources::linkFileFooter(Cot::$cfg['themes_dir'] . '/' . Cot::$cfg['defaultthem
 
 Resources::addFile(Cot::$cfg['themes_dir'] . '/' . Cot::$cfg['defaulttheme'] . '/assets/select2/select2.min.css');
 Resources::addFile(Cot::$cfg['themes_dir'] . '/' . Cot::$cfg['defaulttheme'] . '/assets/select2/select2.min.js');
-Resources::linkFileFooter('lib/bootstrap/js/bootstrap.bundle.min.js');
+
 Resources::linkFileFooter('lib/bootstrap/js/bootstrap.bundle.min.js');
 if (Cot::$cfg['headrc_consolidate']) {
     Resources::addFile('lib/bootstrap/js/bootstrap.bundle.min.js');
