@@ -25,8 +25,8 @@ Resources::addFile(Cot::$cfg['themes_dir'] . '/' . Cot::$cfg['defaulttheme'] . '
 Resources::addFile(Cot::$cfg['themes_dir'] . '/' . Cot::$cfg['defaulttheme'] . '/assets/fancybox/fancybox.umd.js');
 
 
-Resources::addFile(Cot::$cfg['themes_dir'] . '/' . Cot::$cfg['defaulttheme'] . '/assets/perfect-scrollbar/styles-perfect-scrollbar.css'); 
 Resources::addFile(Cot::$cfg['themes_dir'] . '/' . Cot::$cfg['defaulttheme'] . '/assets/perfect-scrollbar/perfect-scrollbar.css');
+Resources::addFile(Cot::$cfg['themes_dir'] . '/' . Cot::$cfg['defaulttheme'] . '/assets/perfect-scrollbar/styles-perfect-scrollbar.css'); 
 
 Resources::linkFileFooter(Cot::$cfg['themes_dir'] . '/' . Cot::$cfg['defaulttheme'] . '/assets/perfect-scrollbar/perfect-scrollbar.min.js');
 Resources::linkFileFooter(Cot::$cfg['themes_dir'] . '/' . Cot::$cfg['defaulttheme'] . '/assets/perfect-scrollbar/js-perfect-scrollbar.js'); 
