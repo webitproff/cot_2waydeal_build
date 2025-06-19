@@ -10,4 +10,5 @@ https://github.com/Cotonti/Cotonti
 
 **совместимость Cotonti Siena v.0.9.26, PHP 8.2**
 установка рекомендуется только на чистый сайт с нуля
- если нужен бекап того что на демке - в [личку](https://abuyfile.com/users/webitproff) 
+
+***если нужен бекап того что на демке - пишите в [личку](https://abuyfile.com/users/webitproff)***
