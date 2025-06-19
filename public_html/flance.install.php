@@ -21,7 +21,6 @@ $default_plugins = [
     'ckeditor',
     'html',
     'htmlpurifier',
-    'ipsearch',
     'mcaptcha',
     'indexnews',
     'search',
@@ -31,7 +30,6 @@ $default_plugins = [
     'useragreement',
     'usercategories',
     'usergroupselector',
-    'userpoints',
     'userimages',
 ];
 
