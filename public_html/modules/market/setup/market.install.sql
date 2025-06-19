@@ -1,0 +1,33 @@
+/**
+ * market module DB installation
+ */
+-- Market table
+CREATE TABLE IF NOT EXISTS `cot_market` (
+  `item_id`        INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  `item_userid`    INT UNSIGNED NOT NULL DEFAULT 0,
+  `item_date`      INT UNSIGNED NOT NULL DEFAULT 0,
+  `item_update`    INT UNSIGNED NOT NULL DEFAULT 0,
+  `item_parser`    VARCHAR(64) DEFAULT '',
+  `item_cat`       VARCHAR(255) NOT NULL DEFAULT '',
+  `item_title`     VARCHAR(255) NOT NULL,
+  `item_alias`     VARCHAR(255) DEFAULT '',
+  `item_desc`      VARCHAR(255) DEFAULT '',
+  `item_keywords`  VARCHAR(255) DEFAULT '',
+  `item_metatitle` VARCHAR(255) DEFAULT '',
+  `item_metadesc`  VARCHAR(255) DEFAULT '',
+  `item_text`      MEDIUMTEXT,
+  `item_cost`      DECIMAL(10,2) NOT NULL DEFAULT 0.00,
+  `item_count`     INT UNSIGNED NOT NULL DEFAULT 0,
+  `item_sort`      INT UNSIGNED NOT NULL DEFAULT 0,
+  `item_state`     TINYINT UNSIGNED NOT NULL DEFAULT 0,
+  `item_country`   CHAR(3) DEFAULT '',
+  `item_region`    INT UNSIGNED NOT NULL DEFAULT 0,
+  `item_city`      INT UNSIGNED NOT NULL DEFAULT 0,
+  PRIMARY KEY (`item_id`),
+  KEY `item_userid` (`item_userid`),
+  KEY `item_cat` (`item_cat`),
+  KEY `item_alias` (`item_alias`),
+  KEY `item_date` (`item_date`),
+  KEY `item_cost` (`item_cost`),
+  KEY `item_state` (`item_state`)
+) ENGINE=InnoDB;

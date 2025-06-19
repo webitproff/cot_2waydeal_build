@@ -1,0 +1,25 @@
+.ps-container {
+  height: calc(100vh - 70px); /* 100vh = 100% высоты окна */
+  overflow: auto;
+}
+
+.ps-container-breadcrumb {
+  width: calc(80vw - 20px);
+  max-width: 100%;
+  overflow: hidden;
+  position: relative;
+  padding-bottom: -20px; /* место для скроллбара */
+  
+}
+.ps-container-breadcrumb .ps__rail-x {
+      opacity: 0.6;
+    }
+.ps-container-breadcrumb .breadcrumb {
+  white-space: nowrap;
+  min-width: max-content;
+  margin-bottom: 0;
+  padding: 0 1rem;
+  display: flex;
+  flex-wrap: nowrap;
+
+}
