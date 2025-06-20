@@ -1,5 +1,5 @@
-сборка (уже адаптирована мной)
-демо https://forbiz.abuyfile.com/ 
+
+[Demo](https://forbiz.abuyfile.com)
 
 
 сразу закачиваем движок
