@@ -1,6 +1,6 @@
 <?php
 /**
- * JavaScript and CSS loader for DoubleDo [wdo] theme
+ * JavaScript and CSS loader 
  *
  * @package Cotonti
  * @version 0.9.26
