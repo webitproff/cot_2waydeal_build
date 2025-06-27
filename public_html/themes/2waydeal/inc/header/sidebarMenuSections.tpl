@@ -13,7 +13,7 @@
                 <a class="nav-link" href="{PHP|cot_url('index')}">
                   <i class="fa-solid fa-house"></i> {PHP.L.Home} </a>
               </li>
-              <!-- IF {PHP|cot_modules('projects')} -->
+              <!-- IF {PHP|cot_module_active('projects')} -->
               <li class="nav-item">
                 <a class="nav-link" href="{PHP|cot_url('projects')}">
                   <span class="me-2">
@@ -21,7 +21,7 @@
                   </span>{PHP.L.projects_projects} </a>
               </li>
               <!-- ENDIF -->
-              <!-- IF {PHP|cot_modules('market')} -->
+              <!-- IF {PHP|cot_module_active('market')} -->
               <li class="nav-item">
                 <a class="nav-link" href="{PHP|cot_url('market')}">
                   <span class="me-2">
@@ -29,7 +29,7 @@
                   </span>{PHP.L.market} </a>
               </li>
               <!-- ENDIF -->
-              <!-- IF {PHP|cot_modules('folio')} -->
+              <!-- IF {PHP|cot_module_active('folio')} -->
               <li class="nav-item">
                 <a class="nav-link" href="{PHP|cot_url('folio')}">
                   <span class="me-2">
