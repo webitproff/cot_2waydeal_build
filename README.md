@@ -15,6 +15,7 @@
 
 ⭐ Freelance MarketPlace script ⭐ by webitproff
 
+<img src="https://raw.githubusercontent.com/webitproff/cot_2waydeal_build/refs/heads/master/public_html/themes/2waydeal/img/freelance-on-cmf-cotonti.webp" alt="Freelance on Cotonti CMF" title="Freelance on Cotonti CMF" />
 ---
 
 ## Installation Guide
