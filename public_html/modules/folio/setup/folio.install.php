@@ -32,5 +32,4 @@ global $db_structure, $db_folio, $db_auth;
 	cot_structure_add('folio', array('structure_area' => 'folio', 'structure_code' => 'construction', 'structure_title' => 'Строительство', 'structure_path' => '010'));
 	
 	$db->update($db_auth, array('auth_rights' => 1), "auth_code='folio' AND auth_groupid=7");
-}
 
