@@ -162,6 +162,7 @@ function cot_build_structure_market_tree($parent = '', $selected = '', $level = 
 		$urlparams['c'] = $row;
 		$subcats = $structure['market'][$row]['subcats'];
 		$t1->assign(array(
+			"ROW_ID" => $row, // Добавляем уникальный идентификатор (код категории)
 			"ROW_TITLE" => htmlspecialchars($structure['market'][$row]['title']),
 			"ROW_DESC" => $structure['market'][$row]['desc'],
 			"ROW_COUNT" => $structure['market'][$row]['count'],
