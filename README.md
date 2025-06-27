@@ -1,4 +1,23 @@
-# Installation Guide
+# Скрипт торговой площадки фриланс услуг #
+## Обновленная стартовая сборка фриланс-биржи на Cotonti CMF v.0.9.26, совместимая с PHP 8.2, от 27.06.2025 ##
+
+[Демонстрация сайта](https://2waydeal.previewit.work/)
+
+---
+
+# Freelance Marketplace Script
+
+## Updated starter build of a freelance exchange platform on Cotonti CMF v0.9.26, compatible with PHP 8.2 (as of June 27, 2025)
+
+[Live Demo](https://2waydeal.previewit.work/)
+
+---
+
+⭐ Freelance MarketPlace script ⭐ by webitproff
+
+---
+
+## Installation Guide
 
 ### 1. Create the Database
 
