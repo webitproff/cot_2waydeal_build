@@ -142,6 +142,6 @@ $L['att_err_type'] = 'Такой тип файлов не разрешен';
 $L['att_err_upload'] = 'Не удалось загрузить файл';
 $L['att_err_count'] = 'Превышено максимальное число файлов';
 
-$L['att_button_small_title'] = cot::$cfg['plugin']['attacher']['thumb_x'] . '*' . cot::$cfg['plugin']['attacher']['thumb_y'];
-$L['att_button_big_title'] = cot::$cfg['plugin']['attacher']['thumb_big_width'] . '*' . cot::$cfg['plugin']['attacher']['thumb_big_height'];
+$L['att_button_small_title'] = (cot::$cfg['plugin']['attacher']['thumb_x'] ?? 100) . '*' . (cot::$cfg['plugin']['attacher']['thumb_y'] ?? 100);
+$L['att_button_big_title'] = (cot::$cfg['plugin']['attacher']['thumb_big_width'] ?? 800) . '*' . (cot::$cfg['plugin']['attacher']['thumb_big_height'] ?? 600);
 $L['visual_only'] = 'Вставка доступна в визуальном режиме, выйдите из режима кода!';
