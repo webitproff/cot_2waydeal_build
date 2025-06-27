@@ -18,6 +18,7 @@ Schemes=default:Default
 
 defined('COT_CODE') or die('Wrong URL');
 
+require_once Cot::$cfg['themes_dir'] . '/' . Cot::$cfg['defaulttheme'] . '/' . Cot::$cfg['defaulttheme'] . '.resources.php';
 
 /**
  * Cotonti Plugin Users Avatar
@@ -80,37 +81,3 @@ $R['input_textarea_newpmrecipient'] = '<textarea class="form-control" name="{$na
  */
  
  
- 
-function timeLeft($dateTime)
-{
-    return cot_build_timegap(cot::$sys['now'], $dateTime, 4, 0, null, 60);
-}
-
-function ul_transform(?string $code): string
-{
-    // Проверяем, что входной параметр не null, иначе присваиваем пустую строку
-    $code = $code ?? '';
-
-    // Заменяем теги <a> и <span> на их аналоги внутри списка <li>
-    $code = str_replace("<a", "<li><a ", $code);
-    $code = str_replace("</a>", "</a></li>", $code);
-    $code = str_replace("<span", "<li><span", $code);
-    $code = str_replace("</span>", "</span></li>", $code);
-    $code = str_replace("</li> /", "</li>", $code);
-
-    return $code;
-}
-
-
-// Определяем функцию для проверки существования страницы по категории и ID
-// пример: <!-- IF {PHP|cot_page_exists_by_cat_and_id('system', 2)} --> тут ссылка <!-- ENDIF --> 
-function cot_page_exists_by_cat_and_id($cat, $id) {
-    // Подключаем глобальные переменные Cotonti: $db (объект базы данных), $db_x (префикс таблиц), $db_pages (имя таблицы страниц)
-    global $db, $db_x, $db_pages;
-    // Устанавливаем имя таблицы: если $db_pages определена, берём её, иначе составляем из префикса $db_x и 'pages' (например, 'cot_pages')
-    $table = isset($db_pages) ? $db_pages : $db_x . 'pages';
-    // Выполняем SQL-запрос: считаем количество строк в таблице $table, где page_cat = $cat и page_id = $id, используя параметры для безопасности
-    $res = $db->query("SELECT COUNT(*) FROM $table WHERE page_cat = ? AND page_id = ?", [$cat, $id])->fetchColumn();
-    // Возвращаем true, если страница найдена (count > 0), иначе false
-    return $res > 0;
-}
