@@ -1,5 +1,5 @@
 
-[Demo](https://forbiz.abuyfile.com)
+[Demo](https://2waydeal.previewit.work/index.php)
 
 
 сразу закачиваем движок
