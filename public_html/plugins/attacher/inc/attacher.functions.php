@@ -1032,7 +1032,11 @@ function att_cot_thumb($source, $target, $width, $height, $resize = 'crop', $qua
             }
         }
 
-        $newimage = imagecreatetruecolor($width, $height); //
+       // $newimage = imagecreatetruecolor($width, $height); //
+		$int_width = (int)round($width);
+		$int_height = (int)round($height);
+		$newimage = imagecreatetruecolor($int_width, $int_height);
+
     }
 
     if ($ext == 'gif' || $ext == 'png') {
