@@ -160,7 +160,7 @@ function cot_build_structure_market_tree($parent = '', $selected = '', $level = 
 	{
 		$jj++;
 		$urlparams['c'] = $row;
-		$subcats = $structure['market'][$row]['subcats'];
+		$subcats = !empty($structure['market'][$row]['subcats']) ? $structure['market'][$row]['subcats'] : [];
 		$t1->assign(array(
 			"ROW_ID" => $row, // Добавляем уникальный идентификатор (код категории)
 			"ROW_TITLE" => htmlspecialchars($structure['market'][$row]['title']),
