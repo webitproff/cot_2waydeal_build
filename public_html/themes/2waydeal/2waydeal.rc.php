@@ -45,4 +45,4 @@ if (Cot::$cfg['headrc_consolidate']) {
 
 Resources::addFile(Cot::$cfg['themes_dir'] . '/' . Cot::$cfg['defaulttheme'] . '/js/js.js');
 
-require_once Cot::$cfg['themes_dir'] . '/' . Cot::$cfg['defaulttheme'] . '/' . Cot::$cfg['defaulttheme'] . '.resources.php';
+
