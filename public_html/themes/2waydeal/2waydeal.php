@@ -59,6 +59,12 @@ $R['icon_down'] = '<i class="fa-regular fa-circle-down fa-lg"></i>';
 $R['icon_up'] = '<i class="fa-regular fa-circle-up fa-lg"></i>';
 $R['icon_order_asc'] = $R['icon_up'];
 $R['icon_order_desc'] = $R['icon_down'];
+
+/**
+ * Structure
+ */
+$R['img_structure_cat'] = '<img class="bg-white rounded-circle" width="36" height="36" src="{$icon}" alt="{$title}" title="{$desc}" />';
+
 /**
  * Cotonti Module Users
  */
