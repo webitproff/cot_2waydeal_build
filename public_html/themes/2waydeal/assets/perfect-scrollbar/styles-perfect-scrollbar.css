@@ -1,6 +1,40 @@
 .ps-container {
-  height: calc(100vh - 70px); /* 100vh = 100% высоты окна */
-  overflow: auto;
+    height: 100%; /* Полная высота родителя */
+    overflow-y: hidden;
+    scrollbar-width: thin; /* Тонкая полоса для Firefox */
+    scrollbar-color: #888888 #f1f1f1; /* Ползунок и трек */
+}
+.ps-container:hover {
+    overflow-y: auto;
+}
+
+/* Для Chrome, Safari, Opera */
+.ps-container::-webkit-scrollbar {
+    width: 6px; /* Тонкая полоса */
+}
+.ps-container::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+.ps-container::-webkit-scrollbar-thumb {
+    background: #888888;
+    border-radius: 3px;
+}
+.ps-container::-webkit-scrollbar-thumb:hover {
+    background: #555555;
+}
+
+/* Для Firefox */
+@-moz-document url-prefix() {
+    .ps-container {
+        scrollbar-width: thin;
+        scrollbar-color: #888888 #f1f1f1;
+    }
+}
+
+/* Убедимся, что внутренние элементы не добавляют лишних отступов */
+.ps-container > div, .ps-container > ul {
+    margin: 0;
+    padding-bottom: 0;
 }
 
 .ps-container-breadcrumb {
