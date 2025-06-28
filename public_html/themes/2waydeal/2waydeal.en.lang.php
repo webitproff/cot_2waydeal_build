@@ -57,6 +57,8 @@ $L['footer_cotonti_tooltip'] = 'The site is powered by Cotonti Siena CMF - a pow
 
 $L['2wd_menu_sections'] = 'Site Sections';
 $L['2wd_info_and_support'] = 'Help and Support';
+$L['2wd_info_sourceCode'] = 'Source code and updates';
+$L['2wd_info_forumSupport'] = 'Support, help, questions';
 $L['2wd_Publications'] = 'Articles and Blogs';
 $L['2wd_cat_title_news'] = 'News';
 $L['2wd_cat_title_events'] = 'Events';
