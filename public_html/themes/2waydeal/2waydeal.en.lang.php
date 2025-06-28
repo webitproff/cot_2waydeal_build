@@ -31,25 +31,29 @@ $cot_groups['4']['name'] = 'Freelancers';
 
 
 // Market structure localization title
-$structure['market']['programming']['title'] = 'Programming';
-$structure['market']['programming']['tpath'] = 'Programming (See 2waydeal.EN.lang.php)'; // Use ['tpath'] for Select box
-$structure['market']['programming']['desc'] = '<i class="fa-solid fa-circle-info fa-lg me-2"></i> Selling digital goods and software products at low prices is dumping and fraud! <span class="fw-bold text-danger">(See more in 2waydeal.EN.lang.php)</span>'; // Use {CATDESC}
-$cfg['market']['cat_programming']['market_cat_metatitle']= 'Meta Heading of the Programming category (See 2waydeal.EN.lang.php)';
-$cfg['market']['cat_programming']['market_cat_metadesc']= 'Selling digital goods and software products at low prices is dumping (See 2waydeal.EN.lang.php)';
-
-
-$structure['market']['management']['title'] = 'Management';
-$structure['market']['management']['tpath'] = 'Management'; // for Select box
-$structure['market']['marketing']['title'] = 'Marketing and advertising';
-$structure['market']['marketing']['tpath'] = 'Marketing and advertising'; // for Select box
+if (isset($structure['market']['programming']) && is_array($structure['market']['programming'])) {
+    $structure['market']['programming']['title'] = 'Software Products';
+    $structure['market']['programming']['tpath'] = 'Programs and Scripts (see 2waydeal.en.lang.php)';
+    $structure['market']['programming']['desc'] = '<i class="fa-solid fa-circle-info fa-xl me-2"></i> Selling digital goods and software products at dirt-cheap prices is dumping and shady! <span class="fw-bold text-danger">(See more in 2waydeal.en.lang.php)</span>';
+}
+if (isset($structure['market']['management']) && is_array($structure['market']['management'])) {
+    $structure['market']['management']['title'] = 'Project Management';
+}
+if (isset($structure['market']['marketing']) && is_array($structure['market']['marketing'])) {
+    $structure['market']['marketing']['title'] = 'Advertising and Marketing';
+}
 
 // usercategories structure localization title
-$structure['usercategories']['programming']['title'] = 'Programming';
-$structure['usercategories']['programming']['tpath'] = 'Programming'; // for Select box
-$structure['usercategories']['management']['title'] = 'Management';
-$structure['usercategories']['management']['tpath'] = 'Management';
-$structure['usercategories']['marketing']['title'] = 'Marketing and advertising';
-$structure['usercategories']['marketing']['tpath'] = 'Marketing and advertising';
+if (isset($structure['usercategories']['programming']) && is_array($structure['usercategories']['programming'])) {
+    $structure['usercategories']['programming']['title'] = 'Coding and Programming';
+}
+if (isset($structure['usercategories']['management']) && is_array($structure['usercategories']['management'])) {
+    $structure['usercategories']['management']['title'] = 'Management';
+}
+if (isset($structure['usercategories']['marketing']) && is_array($structure['usercategories']['marketing'])) {
+    $structure['usercategories']['marketing']['title'] = 'Advertising and Marketing';
+}
+
 
 $L['footer_engine'] = 'Site Engine';
 $L['footer_cotonti'] = 'CMF Cotonti 0.9.26';
