@@ -30,16 +30,28 @@ $cot_groups['7']['name'] = 'Наниматели';
 $cot_groups['4']['name'] = 'Исполнители';
 
 // Market structure localization title
-$structure['market']['programming']['title'] = 'Программные продукты';
-$structure['market']['programming']['tpath'] = 'Программы и скрипты (смотри 2waydeal.ru.lang.php)'; // Use ['tpath'] for Select box
-$structure['market']['programming']['desc'] = '<i class="fa-solid fa-circle-info fa-xl me-2"></i> продажа цифровых товаров и программных продуктов по низким ценам - это демпинг и западло! <span class="fw-bold text-danger">(See more in 2waydeal.ru.lang.php)</span>'; // Use {CATDESC}
-$structure['market']['management']['title'] = 'Управление проектами';
-$structure['market']['marketing']['title'] = 'Реклама и маркетинг';
+if (isset($structure['market']['programming']) && is_array($structure['market']['programming'])) {
+    $structure['market']['programming']['title'] = 'Программные продукты';
+    $structure['market']['programming']['tpath'] = 'Программы и скрипты (смотри 2waydeal.ru.lang.php)';
+    $structure['market']['programming']['desc'] = '<i class="fa-solid fa-circle-info fa-xl me-2"></i> продажа цифровых товаров и программных продуктов по низким ценам - это демпинг и западло! <span class="fw-bold text-danger">(See more in 2waydeal.ru.lang.php)</span>';
+}
+if (isset($structure['market']['management']) && is_array($structure['market']['management'])) {
+    $structure['market']['management']['title'] = 'Управление проектами';
+}
+if (isset($structure['market']['marketing']) && is_array($structure['market']['marketing'])) {
+    $structure['market']['marketing']['title'] = 'Реклама и маркетинг';
+}
 
 // usercategories structure localization title
-$structure['usercategories']['programming']['title'] = 'Кодинг и програмирование';
-$structure['usercategories']['management']['title'] = 'Руководство';
-$structure['usercategories']['marketing']['title'] = 'Реклама и маркетинг';
+if (isset($structure['usercategories']['programming']) && is_array($structure['usercategories']['programming'])) {
+    $structure['usercategories']['programming']['title'] = 'Кодинг и програмирование';
+}
+if (isset($structure['usercategories']['management']) && is_array($structure['usercategories']['management'])) {
+    $structure['usercategories']['management']['title'] = 'Руководство';
+}
+if (isset($structure['usercategories']['marketing']) && is_array($structure['usercategories']['marketing'])) {
+    $structure['usercategories']['marketing']['title'] = 'Реклама и маркетинг';
+}
 
 $L['footer_engine'] = 'Движок сайта';
 $L['footer_cotonti'] = 'CMF Cotonti 0.9.26';
