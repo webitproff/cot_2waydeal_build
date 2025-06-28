@@ -10,6 +10,39 @@
   <div class="px-0 m-0 row justify-content-center">
     <div class="col-12 col-xxl-11"> 
 	{FILE "{PHP.cfg.themes_dir}/{PHP.cfg.defaulttheme}/warnings.tpl"} 
+	<div class="col-12">
+	  <div class="row align-items-center mb-2">
+	    <div class="col-md-8 col-lg-9 col-12 col-auto">
+	      <div class="row align-items-center">
+	        <div class="col-auto">
+			 <div class="position-relative">
+	          <!-- IF {LIST_CAT_ICON} -->
+	          <img width="27" height="27" alt="{LIST_CAT_TITLE}" src="{LIST_CAT_ICON}">
+	          <!-- ELSE -->
+	          <img width="27" height="27" alt="{LIST_CAT_TITLE}" src="{PHP.R.cat_icon_mylogo}">
+	          <!-- ENDIF -->
+			  <!-- IF {PHP.cat.count} > 0 -->
+			  <span class="position-absolute top-0 start-100 translate-middle badge text-bg-primary">{PHP.cat.count}</span>
+			  <!-- ENDIF -->
+			  </div>
+	        </div>
+	        <div class="col">
+	          <h1 class="h4 mb-0"> 
+			  {LIST_CAT_TITLE}
+	          </h1>
+	        </div>
+	      </div>
+	    </div>
+	    <!-- IF {PHP|cot_auth('page', '{PHP.c}', 'W')} -->
+	    <div class="col-md-4 col-lg-3 col-12 d-flex justify-content-center justify-content-md-end mt-3 mt-md-0">
+	      <a class="btn btn-outline-secondary" href="{PHP|cot_url('page', 'm=add', '&c={PHP.c}')}">{PHP.L.page_addtitle}</a>
+	    </div>
+	    <!-- ENDIF -->
+	  </div>
+	  <!-- IF {LIST_CAT_DESCRIPTION} -->
+	  <h2 class="h6 text-muted mb-2">{LIST_CAT_DESCRIPTION}</h2>
+	  <!-- ENDIF -->
+	</div>
 	  <div class="row px-0">
         <div class="col-12 col-lg-8 mx-auto pt-4">
           <!-- BEGIN: LIST_CAT_ROW -->
@@ -91,6 +124,11 @@
             <ul class="pagination justify-content-center">{PREVIOUS_PAGE} {PAGINATION} {NEXT_PAGE}</ul>
           </nav>
           <!-- ENDIF -->
+		  <!-- IF {PHP.cat.count} == 0 -->
+			<div class="alert alert-light" role="alert">
+			  {PHP.L.2wd_page_catEmpty}
+			</div> 
+		  <!-- ENDIF -->
         </div>
         <div class="col-12 col-lg-4 mx-auto">
           <!-- IF {PHP.usr.maingrp} == 5 -->
