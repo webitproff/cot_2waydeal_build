@@ -77,6 +77,7 @@ $L['2wd_page_latest_update'] = 'Last Updated:';
 $L['2wd_page_HasAttachment'] = 'Has File for Download';
 $L['2wd_page_DownloadFile'] = 'Download File Now';
 $L['2wd_page_LinkMainImage_hint'] = 'Upload the main image for this article via the file manager and then insert the image link here';
+$L['2wd_page_catEmpty'] = 'There are no articles in this section yet';
 
 $L['2wd_Comments'] = "Comments on the Page";
 $L['2wd_Comment_Edit'] = "Edit Comment";
