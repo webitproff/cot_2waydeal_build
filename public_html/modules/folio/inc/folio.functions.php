@@ -137,9 +137,7 @@ function cot_build_structure_folio_tree($parent = '', $selected = '', $level = 0
 		"DESC" => !empty($parent) && isset($structure['folio'][$parent]) ? $structure['folio'][$parent]['desc'] : '',
 		"COUNT" => !empty($parent) && isset($structure['folio'][$parent]) ? $structure['folio'][$parent]['count'] : '',
 		"ICON" => !empty($parent) && isset($structure['folio'][$parent]) ? $structure['folio'][$parent]['icon'] : '',
-		"HREF" => !empty($parent) && isset($structure['folio'][$parent])
-            ? cot_url("folio", $urlparams + array('c' => $parent))
-            : '',
+		"HREF" => cot_url('folio', $urlparams + array('c' => $parent)),
 		"LEVEL" => $level,
 	]);
 
@@ -153,6 +151,7 @@ function cot_build_structure_folio_tree($parent = '', $selected = '', $level = 0
 		$urlparams['c'] = $row;
 		$subcats = !empty($structure['folio'][$row]['subcats']) ? $structure['folio'][$row]['subcats'] : [];
 		$t1->assign([
+			"ROW_ID" => $row, // Добавляем уникальный идентификатор (код категории)
 			"ROW_TITLE" => htmlspecialchars($structure['folio'][$row]['title']),
 			"ROW_DESC" => $structure['folio'][$row]['desc'],
 			"ROW_COUNT" => $structure['folio'][$row]['count'],
