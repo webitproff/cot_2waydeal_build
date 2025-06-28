@@ -47,6 +47,8 @@ $L['footer_cotonti_tooltip'] = 'Сайт работает на Cotonti Siena CMF
 
 $L['2wd_menu_sections'] = 'Разделы сайта';
 $L['2wd_info_and_support'] = 'Справка и поддержка';  
+$L['2wd_info_sourceCode'] = 'Исходный код и обновления'; 
+$L['2wd_info_forumSupport'] = 'Поддержка, помощь, вопросы'; 
 $L['2wd_Publications'] = 'Статьи и блоги';
 $L['2wd_cat_title_news'] = 'Новости'; 
 $L['2wd_cat_title_events'] = 'События'; 
