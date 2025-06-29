@@ -15,7 +15,7 @@
 	        <div class="col-auto">
 			 <div class="position-relative">
 	          <!-- IF {LIST_CAT_ICON} -->
-	          <img width="27" height="27" alt="{LIST_CAT_TITLE}" src="{LIST_CAT_ICON}">
+	          <img width="27" height="27" alt="{LIST_CAT_TITLE}" src="{LIST_CAT_ICON_SRC}">
 	          <!-- ELSE -->
 	          <img width="27" height="27" alt="{LIST_CAT_TITLE}" src="{PHP.R.cat_icon_mylogo}">
 	          <!-- ENDIF -->
