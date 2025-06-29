@@ -4,14 +4,14 @@
     <li class="list-group-item list-group-item-action {PAGE_ROW_ODDEVEN}">
         <div class="row g-3">
             <div class="col-12 col-md-8">
-				<h5 class="mb-0 fs-6 fw-semibold text-primary-emphasis"><a class="text-reset" href="{PAGE_ROW_URL}">{PAGE_ROW_TITLE}</a></h5>
+				<h5 class="mb-0 fs-6 fw-semibold"><a href="{PAGE_ROW_URL}">{PAGE_ROW_TITLE}</a></h5>
                 <!-- IF {PAGE_ROW_DESCRIPTION} -->
-                <p class="mb-1">{PAGE_ROW_DESCRIPTION}</p>
+                <p class="mb-1 text-secondary">{PAGE_ROW_DESCRIPTION}</p>
                 <!-- ELSE -->
-                <p class="mb-1">{PAGE_ROW_TEXT|strip_tags($this)|mb_substr($this, 0, 90, 'UTF-8')} ...</p>
+                <p class="mb-1 text-muted fw-light">{PAGE_ROW_TEXT|strip_tags($this)|mb_substr($this, 0, 90, 'UTF-8')} ...</p>
                 <!-- ENDIF -->
             </div>
-            <div class="col-12 col-md-4 text-center">
+            <div class="col-12 col-md-4 text-center d-none d-lg-block">
                 <div>
                     <small class="text-body-secondary">{PHP.L.Author} {PAGE_ROW_OWNER_NAME}</small>
                 </div>
