@@ -27,15 +27,15 @@
                                 <div class="list-group-item list-group-item-action {FORUMS_SECTIONS_ROW_ODDEVEN}">
                                     <div class="row g-3">
                                         <div class="col-12 col-md-8">
-                                            <h5 class="mb-0 fs-6 fw-semibold text-primary-emphasis">
+                                            <h5 class="mb-0 fs-6 fw-semibold">
                                                 <span class="text-muted small me-1">{PHP.R.icon_subfolder}</span>
-                                                <a class="text-reset text-decoration-none" href="{FORUMS_SECTIONS_ROW_URL}" title="{FORUMS_SECTIONS_ROW_TITLE}">{FORUMS_SECTIONS_ROW_TITLE}</a>
+                                                <a href="{FORUMS_SECTIONS_ROW_URL}" title="{FORUMS_SECTIONS_ROW_TITLE}">{FORUMS_SECTIONS_ROW_TITLE}</a>
                                             </h5>
                                             <!-- IF {FORUMS_SECTIONS_ROW_DESC} -->
-                                                <p class="mb-1 text-muted">{FORUMS_SECTIONS_ROW_DESC}</p>
+                                                <p class="mb-1 text-muted fw-light">{FORUMS_SECTIONS_ROW_DESC}</p>
                                             <!-- ENDIF -->
                                         </div>
-                                        <div class="col-12 col-md-4 text-center">
+                                        <div class="col-12 col-md-4 text-center d-none d-lg-block">
                                             <small class="text-body-secondary">{PHP.L.forums_topics}: {FORUMS_SECTIONS_ROW_TOPICCOUNT}</small>
                                             <small class="text-body-secondary">{PHP.L.forums_posts}: {FORUMS_SECTIONS_ROW_POSTCOUNT}</small><br>
                                             <small class="text-body-secondary">{PHP.L.Lastpost}: {FORUMS_SECTIONS_ROW_LASTPOSTER}</small><br>
@@ -82,7 +82,7 @@
                             <div class="list-group-item list-group-item-action {FORUMS_TOPICS_ROW_ODDEVEN}">
                                 <div class="row g-3">
                                     <div class="col-12 col-md-8">
-                                        <h5 class="mb-0 fs-6 fw-semibold text-primary-emphasis">
+                                        <h5 class="mb-0 fs-6 fw-semibold">
                                             <span class="text-muted small me-1">{FORUMS_TOPICS_ROW_ICON}</span>
                                             <a class="text-reset text-decoration-none" href="{FORUMS_TOPICS_ROW_URL}" title="{FORUMS_TOPICS_ROW_PREVIEW}">{FORUMS_TOPICS_ROW_TITLE}</a>
                                         </h5>
@@ -90,13 +90,14 @@
                                             <p class="mb-1 text-muted">{FORUMS_TOPICS_ROW_DESC}</p>
                                         <!-- ENDIF -->
                                         <p class="mb-1 text-muted small">
-                                            {FORUMS_TOPICS_ROW_CREATIONDATE} {PHP.L.2wd_forums_Topic_Starter}: {FORUMS_TOPICS_ROW_FIRSTPOSTER} {FORUMS_TOPICS_ROW_PAGES}
+                                            {FORUMS_TOPICS_ROW_CREATIONDATE} {PHP.L.2wd_forums_Topic_Starter}: {FORUMS_TOPICS_ROW_FIRSTPOSTER} 
                                             <!-- IF {FORUMS_TOPICS_ROW_TAGS} -->
                                                 <br>{FORUMS_TOPICS_ROW_TAGS}
                                             <!-- ENDIF -->
                                         </p>
+										<small class="text-body-secondary">{FORUMS_TOPICS_ROW_PAGES}</small>
                                     </div>
-                                    <div class="col-12 col-md-4 text-center">
+                                    <div class="col-12 col-md-4 text-center d-none d-lg-block">
                                         <small class="text-body-secondary">{PHP.L.forums_posts}: {FORUMS_TOPICS_ROW_POSTCOUNT}</small>
                                         <small class="text-body-secondary">{PHP.L.2wd_forums_Views_Topic}: {FORUMS_TOPICS_ROW_VIEWCOUNT}</small><br>
                                         <small class="text-body-secondary">{PHP.L.Lastpost}: {FORUMS_TOPICS_ROW_LASTPOSTER}</small><br>
@@ -108,12 +109,20 @@
                     </div>
                 </div>
             </div>
-
+			<!-- IF {PAGINATION} -->
+			<div class="col-12">
+			  <nav aria-label="Page Pagination" class="mt-3">
+				<div class="text-center mb-2">{PHP.L.Page} {CURRENT_PAGE} {PHP.L.Of} {TOTAL_PAGES}</div>
+				<ul class="pagination justify-content-center">
+				  {PREVIOUS_PAGE} {PAGINATION} {NEXT_PAGE}
+				</ul>
+			  </nav>
+			</div>
+			<!-- ENDIF -->
             <div class="d-flex flex-wrap gap-3 justify-content-center mt-3">
                 <!-- BEGIN: FORUMS_SECTIONS_VIEWERS -->
                     <span>{PHP.L.forums_viewers}: {FORUMS_TOPICS_VIEWERS} {FORUMS_TOPICS_VIEWER_NAMES}</span>
                 <!-- END: FORUMS_SECTIONS_VIEWERS -->
-                <span>{PREVIOUS_PAGE}{PAGINATION}{NEXT_PAGE}</span>
             </div>
         </div>
     </div>
