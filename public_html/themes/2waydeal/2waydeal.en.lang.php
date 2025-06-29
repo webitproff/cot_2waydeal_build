@@ -1,6 +1,6 @@
 <?php
 /**
- * Custom skin localization file
+ * Custom skin English localization file 2waydeal.en.lang.php
  *
  * @package Cotonti
  * @version 0.9.26
@@ -17,14 +17,18 @@ $L['2wd_darkMode'] = 'Dark Mode';
 $L['2wd_lightMode'] = 'Light Mode';
 
 /**
- * Override configuration setup for Admin Panel
+ * Override the configuration setup from the admin panel
  * Site Management / Configuration / Titles and Meta Tags
  */
-// Title (Site Name)
-$cfg['maintitle'] = '2-Way Deal';
+global $cfg;
+$useCfgFromLang = true; // Use configuration values from the localization file
 
-// Subtitle (Site Description)
-$cfg['subtitle'] = "Free template for a free marketplace assembly for services, goods, and freelance order exchange for freelancers on CMF Cotonti 0.9.26 Bootstrap 5.3.6";
+if ($useCfgFromLang === true) {
+    // Title (Site Name)
+    $cfg['maintitle'] = '2-Way Deal';
+    // Subtitle (Site Description)
+    $cfg['subtitle'] = 'Site description in English for a marketplace of services, goods, and a freelance job exchange, template and script for a freelance exchange on CMF Cotonti 0.9.26 Bootstrap 5.3.6';
+}
 
 $cot_groups['7']['name'] = 'Employers';
 $cot_groups['4']['name'] = 'Freelancers';
@@ -33,9 +37,13 @@ $cot_groups['4']['name'] = 'Freelancers';
 // Market structure localization title
 if (isset($structure['market']['programming']) && is_array($structure['market']['programming'])) {
     $structure['market']['programming']['title'] = 'Software Products';
-    $structure['market']['programming']['tpath'] = 'Programs and Scripts (see 2waydeal.en.lang.php)';
+    $structure['market']['programming']['tpath'] = 'Programs and Scripts (see 2waydeal.en.lang.php)';// Use ['tpath'] for Select box
     $structure['market']['programming']['desc'] = '<i class="fa-solid fa-circle-info fa-xl me-2"></i> Selling digital goods and software products at dirt-cheap prices is dumping and shady! <span class="fw-bold text-danger">(See more in 2waydeal.en.lang.php)</span>';
+	// Market category configuration meta-data for example
+	$cfg['market']['cat_programming']['market_cat_metatitle']= 'Meta Heading of the Programming category (See 2waydeal.EN.lang.php)';
+	$cfg['market']['cat_programming']['market_cat_metadesc']= 'Selling digital goods and software products at low prices is dumping (See 2waydeal.EN.lang.php)';
 }
+
 if (isset($structure['market']['management']) && is_array($structure['market']['management'])) {
     $structure['market']['management']['title'] = 'Project Management';
 }
@@ -53,7 +61,6 @@ if (isset($structure['usercategories']['management']) && is_array($structure['us
 if (isset($structure['usercategories']['marketing']) && is_array($structure['usercategories']['marketing'])) {
     $structure['usercategories']['marketing']['title'] = 'Advertising and Marketing';
 }
-
 
 $L['footer_engine'] = 'Site Engine';
 $L['footer_cotonti'] = 'CMF Cotonti 0.9.26';
