@@ -1,6 +1,6 @@
 <?php
 /**
- * Пользовательский файл локализации скина
+ * Пользовательский файл 2waydeal.ru.lang.php RU локализации скина
  *
  * @package Cotonti
  * @version 0.9.26
@@ -20,11 +20,15 @@ $L['2wd_lightMode'] = 'Светлый режим';
  * переопределяем сетап конфигурации того, что у нас в админке
  * Управление сайтом / Конфигурация / Заголовки и мета-теги 
 */
-// Заголовок (Название сайта)
-$cfg['maintitle'] = '2-Way Deal';
+global $cfg;
+$useCfgFromLang = false; // использовать значения конфигурации из файла локализации // Use configuration values from the localization file
 
-// Подзаголовок (Описание сайта)
-$cfg['subtitle'] = "Бесплатный шаблон для бесплатной сборки маркетплейса услуг, товаров и фриланс-биржи заказов для фрилансеров на CMF Cotonti 0.9.26 Bootstrap 5.3.6";
+if ($useCfgFromLang === true) {
+    // Заголовок (Название сайта)
+    $cfg['maintitle'] = '2-Way Deal';
+    // Подзаголовок (Описание сайта)
+    $cfg['subtitle'] = 'Описание сайта на русском для маркетплейса услуг, товаров и фриланс-биржи заказов, шаблон и скрипт фриланс-биржи на CMF Cotonti 0.9.26 Bootstrap 5.3.6';
+}
 
 $cot_groups['7']['name'] = 'Наниматели';
 $cot_groups['4']['name'] = 'Исполнители';
@@ -42,6 +46,12 @@ if (isset($structure['market']['marketing']) && is_array($structure['market']['m
     $structure['market']['marketing']['title'] = 'Реклама и маркетинг';
 }
 
+// Market category configuration
+if (isset($structure['market']['programming']) && is_array($structure['market']['programming'])) {
+    $cfg['market']['cat_programming']['market_cat_metatitle'] = 'Meta Тайтл of the Programming category (See 2waydeal.ru.lang.php)';
+    $cfg['market']['cat_programming']['market_cat_metadesc'] = 'Meta DECR Selling digital goods and software products at low prices is dumping (See 2waydeal.ru.lang.php)';
+}
+
 // usercategories structure localization title
 if (isset($structure['usercategories']['programming']) && is_array($structure['usercategories']['programming'])) {
     $structure['usercategories']['programming']['title'] = 'Кодинг и програмирование';
@@ -53,12 +63,13 @@ if (isset($structure['usercategories']['marketing']) && is_array($structure['use
     $structure['usercategories']['marketing']['title'] = 'Реклама и маркетинг';
 }
 
+
 $L['footer_engine'] = 'Движок сайта';
 $L['footer_cotonti'] = 'CMF Cotonti 0.9.26';
 $L['footer_cotonti_tooltip'] = 'Сайт работает на Cotonti Siena CMF - мощный каркас веб-разработки и инструмент управления контентом с открытым кодом';
 
 $L['2wd_menu_sections'] = 'Разделы сайта';
-$L['2wd_info_and_support'] = 'Справка и поддержка';  
+$L['2wd_info_and_support'] = 'Справка и поддержка'; 
 $L['2wd_info_sourceCode'] = 'Исходный код и обновления'; 
 $L['2wd_info_forumSupport'] = 'Поддержка, помощь, вопросы'; 
 $L['2wd_Publications'] = 'Статьи и блоги';
@@ -82,7 +93,6 @@ $L['2wd_page_HasAttachment'] = 'Есть файл для загрузки';
 $L['2wd_page_DownloadFile'] = 'Скачать файл сейчас';
 $L['2wd_page_LinkMainImage_hint'] = 'Через менеджер файлов загружаем главную картинку для этой статьи и затем вставляем ссылку на картинку сюда';
 $L['2wd_page_catEmpty'] = 'В разделе пока нет статей';
-
 
 $L['2wd_Comments'] = "Комментариев на странице";
 $L['2wd_Comment_Edit'] = "Правка комментария";
