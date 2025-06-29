@@ -10,7 +10,7 @@ $R['link_pagenav_last'] = '<li class="page-item"><a class="page-link" href="{$ur
 $R['link_pagenav_main'] = '<li class="page-item"><a class="page-link" href="{$url}"{$event}{$rel}>{$num}</a></li>';
 $R['link_pagenav_next'] = '<li class="page-item"><a class="page-link" href="{$url}"{$event}{$rel}>' . $L['pagenav_next'] . '</a></li>';
 $R['link_pagenav_prev'] = '<li class="page-item"><a class="page-link" href="{$url}"{$event}{$rel}>' . $L['pagenav_prev'] . '</a></li>';
-$R['forums_code_topic_pages'] = Cot::$L['Pages'].': <ul class="pagination pagination-sm">{$main}{$last}</ul>';
+$R['forums_code_topic_pages'] = '<ul class="pagination pagination-sm">{$main}{$last}</ul>';
 
 $R['input_checkbox'] = '<input type="hidden" name="{$name}" value="{$value_off}" /><div class="form-check"><input class="form-check-input" type="checkbox" name="{$name}" value="{$value}"{$checked}{$attrs} id="{$name}" /><label class="form-check-label" for="{$name}">{$title}</label></div>';
 $R['input_check'] = '<div class="form-check"><input class="form-check-input" type="checkbox" name="{$name}" value="{$value}"{$checked}{$attrs} id="{$name}" /><label class="form-check-label" for="{$name}">{$title}</label></div>';
