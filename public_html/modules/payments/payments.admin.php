@@ -338,11 +338,12 @@ if($p == 'payouts')
 		WHERE pay_area!='balance' $where_string AND pay_status='done'")->fetchColumn();
 
 	$t->assign([
-		'INBALANCE' => number_format($inbalance, 2, '.', ' '),
-		'OUTBALANCE' => number_format(abs($outbalance), 2, '.', ' '),
-		'BALANCE' => number_format($inbalance - abs($outbalance), 2, '.', ' '),
-		'CREDIT' => number_format($credit, 2, '.', ' '),
+		'INBALANCE'  => number_format((float)($inbalance ?? 0), 2, '.', ' '),
+		'OUTBALANCE' => number_format(abs((float)($outbalance ?? 0)), 2, '.', ' '),
+		'BALANCE'    => number_format((float)($inbalance ?? 0) - abs((float)($outbalance ?? 0)), 2, '.', ' '),
+		'CREDIT'     => number_format((float)($credit ?? 0), 2, '.', ' '),
 	]);
+
 
 	$t->parse('MAIN.PAYMENTS');
 }
