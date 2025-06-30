@@ -81,7 +81,7 @@ $R['breadcrumbs_link'] = '<a href="{$url}" title="{$title}">{$title}</a>';
 $R['breadcrumbs_plain'] = '{$title}';
 $R['breadcrumbs_crumb'] = '{$crumb}';
 $R['breadcrumbs_first'] = '{$crumb}';
-$R['breadcrumbs_last'] = '<span class="d-inline-block text-truncate" style="max-width: 450px;">{$crumb}</span>';
+$R['breadcrumbs_last'] = '<span class="text-truncate" style="max-width: 450px;">{$crumb}</span>';
 
 
 
