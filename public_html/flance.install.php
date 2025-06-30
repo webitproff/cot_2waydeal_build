@@ -81,7 +81,7 @@ function cot_install_step3_setup(): void
 
     if (!empty($file['config']) && file_exists($file['config'])) {
         $config_contents = file_get_contents($file['config']);
-        cot_installConfigReplace($config_contents, 'admintheme', '');
+        cot_installConfigReplace($config_contents, 'admintheme', 'cotcp');
         file_put_contents($file['config'], $config_contents);
     }
 }
