@@ -1,0 +1,59 @@
+.ps-container {
+    height: 100%; /* Полная высота родителя */
+    overflow-y: hidden;
+    scrollbar-width: thin; /* Тонкая полоса для Firefox */
+    scrollbar-color: #888888 #f1f1f1; /* Ползунок и трек */
+}
+.ps-container:hover {
+    overflow-y: auto;
+}
+
+/* Для Chrome, Safari, Opera */
+.ps-container::-webkit-scrollbar {
+    width: 6px; /* Тонкая полоса */
+}
+.ps-container::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+.ps-container::-webkit-scrollbar-thumb {
+    background: #888888;
+    border-radius: 3px;
+}
+.ps-container::-webkit-scrollbar-thumb:hover {
+    background: #555555;
+}
+
+/* Для Firefox */
+@-moz-document url-prefix() {
+    .ps-container {
+        scrollbar-width: thin;
+        scrollbar-color: #888888 #f1f1f1;
+    }
+}
+
+/* Убедимся, что внутренние элементы не добавляют лишних отступов */
+.ps-container > div, .ps-container > ul {
+    margin: 0;
+    padding-bottom: 0;
+}
+
+.ps-container-breadcrumb {
+  width: calc(80vw - 20px);
+  max-width: 100%;
+  overflow: hidden;
+  position: relative;
+  padding-bottom: -20px; /* место для скроллбара */
+  
+}
+.ps-container-breadcrumb .ps__rail-x {
+      opacity: 0.6;
+    }
+.ps-container-breadcrumb .breadcrumb {
+  white-space: nowrap;
+  min-width: max-content;
+  margin-bottom: 0;
+  padding: 0 1rem;
+  display: flex;
+  flex-wrap: nowrap;
+
+}
