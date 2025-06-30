@@ -23,7 +23,7 @@ body {
 /* Dark mode customizations */
 [data-bs-theme="dark"] {
     --bs-body-bg: #111827;
-    --bs-body-color: #f8f9fa;
+    --bs-body-color:#a6a7a8;
     --bs-sidebar-bg: #161c28;
     --bs-sidebar-border: #495057;
     --bs-offcanvas-bg: #343a40;
