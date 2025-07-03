@@ -8,7 +8,7 @@
 </div>
 <div class="min-vh-50 px-2 px-md-3 py-4">
   <div class="row justify-content-center">
-    <div class="col-12 col-xxl-10">
+    <div class="col-12 container-3xl">
       <div class="row align-items-center mb-4">
         <div class="col-md-6">
           <h1 class="mb-0 d-flex align-items-center flex-wrap">
