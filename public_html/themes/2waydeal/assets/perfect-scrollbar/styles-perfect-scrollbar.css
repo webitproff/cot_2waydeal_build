@@ -42,12 +42,15 @@
   max-width: 100%;
   overflow: hidden;
   position: relative;
-  padding-bottom: -20px; /* место для скроллбара */
+  padding-bottom: 0px; /* место для скроллбара */
   
 }
 .ps-container-breadcrumb .ps__rail-x {
-      opacity: 0.6;
-    }
+	z-index: 1055 !important; 
+	bottom: -4px;           /* смещаем скроллбар вниз */
+	height: 6px;             /* толщина скроллбара */
+	opacity: 0.6;
+}
 .ps-container-breadcrumb .breadcrumb {
   white-space: nowrap;
   min-width: max-content;
