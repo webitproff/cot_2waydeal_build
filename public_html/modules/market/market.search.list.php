@@ -17,56 +17,47 @@
 defined('COT_CODE') or die('Wrong URL.');
 
 if (cot::$cfg['market']['marketsearch'] && (empty($tab) || $tab == 'market') && !cot_error_found()) {
-	if ($rs['marketsub'][0] != 'all' && count($rs['marketsub']) > 0)
-	{
-		if ($rs['marketsubcat'])
-		{
-			$tempcat = array();
-			foreach ($rs['marketsub'] as $scat)
-			{
-				$tempcat = array_merge(cot_structure_children('market', $scat), $tempcat);
-			}
-			$tempcat = array_unique($tempcat);
-			$where_and['cat'] = "item_cat IN ('".implode("','", $tempcat)."')";
-		}
-		else
-		{
-			$tempcat = array();
-			foreach ($rs['marketsub'] as $scat)
-			{
-				$tempcat[] = $db->prep($scat);
-			}
-			$where_and['cat'] = "item_cat IN ('".implode("','", $tempcat)."')";
-		}
-	}
-	else
-	{
-		$where_and['cat'] = "item_cat IN ('".implode("','", $market_catauth)."')";
-	}
-	$where_and['state'] = "item_state = 0";
-	$where_and['date'] = ($rs['setlimit'] > 0) ? "item_date >= ".$rs['setfrom']." AND item_date <= ".$rs['setto'] : "";
-	$where_and['users'] = (!empty($touser)) ? "item_userid " . $touser : "";
+    if ($rs['marketsub'][0] != 'all' && count($rs['marketsub']) > 0) {
+        if ($rs['marketsubcat']) {
+            $tempcat = array();
+            foreach ($rs['marketsub'] as $scat) {
+                $tempcat = array_merge(cot_structure_children('market', $scat), $tempcat);
+            }
+            $tempcat = array_unique($tempcat);
+            $where_and['cat'] = "item_cat IN ('".implode("','", $tempcat)."')";
+        } else {
+            $tempcat = array();
+            foreach ($rs['marketsub'] as $scat) {
+                $tempcat[] = $db->prep($scat);
+            }
+            $where_and['cat'] = "item_cat IN ('".implode("','", $tempcat)."')";
+        }
+    } else {
+        $where_and['cat'] = "item_cat IN ('".implode("','", $market_catauth)."')";
+    }
+    $where_and['state'] = "item_state = 0";
+    $where_and['date'] = ($rs['setlimit'] > 0) ? "item_date >= ".$rs['setfrom']." AND item_date <= ".$rs['setto'] : "";
+    $where_and['users'] = (!empty($touser)) ? "item_userid " . $touser : "";
 
-	$where_or['title'] = ($rs['markettitle'] == 1) ? "item_title LIKE '".cot::$db->prep($sqlsearch)."'" : "";
-	$where_or['text'] = (($rs['markettext'] == 1)) ? "item_text LIKE '".cot::$db->prep($sqlsearch)."'" : "";
-	// String query for addition market fields.
-	foreach (explode(',', trim(cot::$cfg['plugin']['search']['addfields'])) as $addfields_el) {
-		$addfields_el = trim($addfields_el);
+    $where_or['title'] = ($rs['markettitle'] == 1) ? "item_title LIKE '".cot::$db->prep($sqlsearch)."'" : "";
+    $where_or['text'] = ($rs['markettext'] == 1) ? "item_text LIKE '".cot::$db->prep($sqlsearch)."'" : "";
+    foreach (explode(',', trim(cot::$cfg['plugin']['search']['addfields'])) as $addfields_el) {
+        $addfields_el = trim($addfields_el);
         if (empty($addfields_el)) {
             continue;
         }
-		$where_or[$addfields_el] = $addfields_el." LIKE '" . cot::$db->prep($sqlsearch) . "'";
-	}
+        $where_or[$addfields_el] = $addfields_el." LIKE '" . cot::$db->prep($sqlsearch) . "'";
+    }
 
-	/* === Hook === */
-	foreach (cot_getextplugins('market.search.query') as $pl) {
-		include $pl;
-	}
-	/* ===== */
+    /* === Hook === */
+    foreach (cot_getextplugins('market.search.query') as $pl) {
+        include $pl;
+    }
+    /* ===== */
 
-	if (!$db->fieldExists($db_market, 'item_'.$rs['marketsort'])) {
-		$rs['marketsort'] = 'date';
-	}
+    if (!$db->fieldExists($db_market, 'item_'.$rs['marketsort'])) {
+        $rs['marketsort'] = 'date';
+    }
 
     $where_or = array_diff($where_or, array(''));
     count($where_or) || $where_or['title'] = "item_title LIKE '".cot::$db->prep($sqlsearch)."'";
@@ -78,57 +69,75 @@ if (cot::$cfg['market']['marketsearch'] && (empty($tab) || $tab == 'market') && 
     $search_join_condition = (!empty($search_join_condition)) ? $search_join_condition : '';
     $search_union_query = (!empty($search_union_query)) ? $search_union_query : '';
 
+    // Фильтрация условий от сторонних плагинов
+    if (!empty($search_join_condition)) {
+        if (strpos($search_join_condition, 't.') !== false || strpos($search_join_condition, 'ft_mode') !== false) {
+            $search_join_condition = '';
+        }
+    }
+    if (!empty($search_union_query)) {
+        if (strpos($search_union_query, 't.') !== false || strpos($search_union_query, 'ft_mode') !== false) {
+            $search_union_query = '';
+        }
+    }
+    if (!empty($search_join_condition)) {
+        if (strpos($search_join_condition, 't.') !== false || strpos($search_join_condition, 'ft_mode') !== false) {
+            $search_join_condition = '';
+        }
+    }
+    if (!empty($where)) {
+        if (strpos($where, 't.') !== false || strpos($where, 'ft_mode') !== false) {
+            $where = $where_and['cat'] . ' AND ' . $where_and['state'] . ' AND ' . $where_and['or'];
+        }
+    }
+
     $query = "SELECT SQL_CALC_FOUND_ROWS m.* $search_join_columns
-		FROM $db_market AS m $search_join_condition
-		WHERE $where
-		ORDER BY item_".$rs['marketsort']." ".$rs['marketsort2']."
-		LIMIT $d, ".$cfg_maxitems
+        FROM $db_market AS m $search_join_condition
+        WHERE $where
+        ORDER BY item_".$rs['marketsort']." ".$rs['marketsort2']."
+        LIMIT $d, ".$cfg_maxitems
         .$search_union_query;
 
-	$sqllist = cot::$db->query($query);
+    $sqllist = cot::$db->query($query);
 
-	$items = $sqllist->rowCount();
-	$totalitems[] = cot::$db->query('SELECT FOUND_ROWS()')->fetchColumn();
-	$jj = 0;
-		
-	$sqllist_rowset = $sqllist->fetchAll();
-	$sqllist_idset = array();
-	foreach($sqllist_rowset as $item)
-	{
-		$sqllist_idset[$item['item_id']] = $item['item_alias'];
-	}	
-	
-	/* === Hook - Part 1 === */
-	$extp = cot_getextplugins('market.search.loop');
-	/* ===== */
-	
-	foreach ($sqllist_rowset as $row)
-	{
-		$url_cat = cot_url('market', 'c='.$row['item_cat']);
-		$url_market = empty($row['item_alias']) ? cot_url('market', 'c='.$row['item_cat'].'&id='.$row['item_id'].'&highlight='.$hl) : cot_url('market', 'c='.$row['item_cat'].'&al='.$row['item_alias'].'&highlight='.$hl);
-		$t->assign(cot_generate_markettags($row, 'PLUGIN_MARKETRES_'));
-		$t->assign(array(
-			'PLUGIN_MARKETRES_CATEGORY' => cot_rc_link($url_cat, $structure['market'][$row['item_cat']]['tpath']),
-			'PLUGIN_MARKETRES_CATEGORY_URL' => $url_cat,
-			'PLUGIN_MARKETRES_TITLE' => cot_rc_link($url_market, htmlspecialchars($row['item_title'])),
-			'PLUGIN_MARKETRES_TEXT' => cot_clear_mark($row['item_text'], $words),
-			'PLUGIN_MARKETRES_TIME' => cot_date('datetime_medium', $row['item_date']),
-			'PLUGIN_MARKETRES_TIMESTAMP' => $row['item_date'],
-			'PLUGIN_MARKETRES_ODDEVEN' => cot_build_oddeven($jj),
-			'PLUGIN_MARKETRES_NUM' => $jj
-		));
-		/* === Hook - Part 2 === */
-		foreach ($extp as $pl)
-		{
-			include $pl;
-		}
-		/* ===== */
-		$t->parse('MAIN.RESULTS.MARKET.ITEM');
-		$jj++;
-	}
-	if ($jj > 0)
-	{
-		$t->parse('MAIN.RESULTS.MARKET');
-	}
-	unset($where_and, $where_or, $where);
+    $items = $sqllist->rowCount();
+    $totalitems[] = cot::$db->query('SELECT FOUND_ROWS()')->fetchColumn();
+    $jj = 0;
+
+    $sqllist_rowset = $sqllist->fetchAll();
+    $sqllist_idset = array();
+    foreach ($sqllist_rowset as $item) {
+        $sqllist_idset[$item['item_id']] = $item['item_alias'];
+    }
+
+    /* === Hook - Part 1 === */
+    $extp = cot_getextplugins('market.search.loop');
+    /* ===== */
+
+    foreach ($sqllist_rowset as $row) {
+        $url_cat = cot_url('market', 'c='.$row['item_cat']);
+        $url_market = empty($row['item_alias']) ? cot_url('market', 'c='.$row['item_cat'].'&id='.$row['item_id'].'&highlight='.$hl) : cot_url('market', 'c='.$row['item_cat'].'&al='.$row['item_alias'].'&highlight='.$hl);
+        $t->assign(cot_generate_markettags($row, 'PLUGIN_MARKETRES_'));
+        $t->assign(array(
+            'PLUGIN_MARKETRES_CATEGORY' => cot_rc_link($url_cat, $structure['market'][$row['item_cat']]['tpath']),
+            'PLUGIN_MARKETRES_CATEGORY_URL' => $url_cat,
+            'PLUGIN_MARKETRES_TITLE' => cot_rc_link($url_market, htmlspecialchars($row['item_title'])),
+            'PLUGIN_MARKETRES_TEXT' => cot_clear_mark($row['item_text'], $words),
+            'PLUGIN_MARKETRES_TIME' => cot_date('datetime_medium', $row['item_date']),
+            'PLUGIN_MARKETRES_TIMESTAMP' => $row['item_date'],
+            'PLUGIN_MARKETRES_ODDEVEN' => cot_build_oddeven($jj),
+            'PLUGIN_MARKETRES_NUM' => $jj
+        ));
+        /* === Hook - Part 2 === */
+        foreach ($extp as $pl) {
+            include $pl;
+        }
+        /* ===== */
+        $t->parse('MAIN.RESULTS.MARKET.ITEM');
+        $jj++;
+    }
+    if ($jj > 0) {
+        $t->parse('MAIN.RESULTS.MARKET');
+    }
+    unset($where_and, $where_or, $where);
 }
