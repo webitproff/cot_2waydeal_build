@@ -1,5 +1,4 @@
 <?php
-
 /**
  * [BEGIN_COT_EXT]
  * Hooks=search.list
@@ -18,32 +17,23 @@
 
 defined('COT_CODE') or die('Wrong URL.');
 
-if ($cfg['folio']['foliosearch'] && ($tab == 'folio' || empty($tab)) && cot_module_active('folio') && !cot_error_found())
-{
-    if ($rs['foliosub'][0] != 'all' && count($rs['foliosub']) > 0)
-    {
-        if ($rs['foliosubcat'])
-        {
+if ($cfg['folio']['foliosearch'] && ($tab == 'folio' || empty($tab)) && cot_module_active('folio') && !cot_error_found()) {
+    if ($rs['foliosub'][0] != 'all' && count($rs['foliosub']) > 0) {
+        if ($rs['foliosubcat']) {
             $tempcat = array();
-            foreach ($rs['foliosub'] as $scat)
-            {
+            foreach ($rs['foliosub'] as $scat) {
                 $tempcat = array_merge(cot_structure_children('folio', $scat), $tempcat);
             }
             $tempcat = array_unique($tempcat);
             $where_and['cat'] = "item_cat IN ('".implode("','", $tempcat)."')";
-        }
-        else
-        {
+        } else {
             $tempcat = array();
-            foreach ($rs['foliosub'] as $scat)
-            {
+            foreach ($rs['foliosub'] as $scat) {
                 $tempcat[] = $db->prep($scat);
             }
             $where_and['cat'] = "item_cat IN ('".implode("','", $tempcat)."')";
         }
-    }
-    else
-    {
+    } else {
         $where_and['cat'] = "item_cat IN ('".implode("','", $folio_catauth)."')";
     }
     $where_and['state'] = "item_state = 0";
@@ -51,61 +41,72 @@ if ($cfg['folio']['foliosearch'] && ($tab == 'folio' || empty($tab)) && cot_modu
     $where_and['users'] = (!empty($touser)) ? "item_userid ".$touser_ids : "";
 
     $where_or['title'] = ($rs['foliotitle'] == 1) ? "item_title LIKE '".$db->prep($sqlsearch)."'" : "";
-    $where_or['text'] = (($rs['foliotext'] == 1)) ? "item_text LIKE '".$db->prep($sqlsearch)."'" : "";
-    // String query for additional folio fields.
-    foreach (explode(',', trim($cfg['plugin']['search']['addfields'])) as $addfields_el)
-    {
+    $where_or['text'] = ($rs['foliotext'] == 1) ? "item_text LIKE '".$db->prep($sqlsearch)."'" : "";
+    foreach (explode(',', trim($cfg['plugin']['search']['addfields'])) as $addfields_el) {
         $addfields_el = trim($addfields_el);
         if (!empty($addfields_el)) {
             $where_or[$addfields_el] = $addfields_el." LIKE '".$db->prep($sqlsearch)."'";
         }
     }
+
+    /* === Hook === */
+    foreach (cot_getextplugins('folio.search.query') as $pl) {
+        include $pl;
+    }
+    /* ===== */
+
+    if (!$db->fieldExists($db_folio, 'item_'.$rs['foliosort'])) {
+        $rs['foliosort'] = 'date';
+    }
+
     $where_or = array_diff($where_or, array(''));
     count($where_or) || $where_or['title'] = "item_title LIKE '".$db->prep($sqlsearch)."'";
     $where_and['or'] = '('.implode(' OR ', $where_or).')';
     $where_and = array_diff($where_and, array(''));
     $where = implode(' AND ', $where_and);
 
-    /* === Hook === */
-    foreach (cot_getextplugins('folio.search.query') as $pl)
-    {
-        include $pl;
-    }
-    /* ===== */
+    $search_join_columns = (!empty($search_join_columns)) ? $search_join_columns : '';
+    $search_join_condition = (!empty($search_join_condition)) ? $search_join_condition : '';
+    $search_union_query = (!empty($search_union_query)) ? $search_union_query : '';
 
-    if (!$db->fieldExists($db_folio, 'item_'.$rs['foliosort']))
-    {
-        $rs['foliosort'] = 'date';
+    // Фильтрация условий от сторонних плагинов
+    if (!empty($search_join_condition)) {
+        if (strpos($search_join_condition, 't.') !== false || strpos($search_join_condition, 'ft_mode') !== false) {
+            $search_join_condition = '';
+        }
     }
-
-    // Initialize variables to avoid undefined variable warnings
-    $search_join_columns = '';
-    $search_join_condition = '';
-    $search_union_query = '';
+    if (!empty($search_union_query)) {
+        if (strpos($search_union_query, 't.') !== false || strpos($search_union_query, 'ft_mode') !== false) {
+            $search_union_query = '';
+        }
+    }
+    if (!empty($where)) {
+        if (strpos($where, 't.') !== false || strpos($where, 'ft_mode') !== false) {
+            $where = $where_and['cat'] . ' AND ' . $where_and['state'] . ' AND ' . $where_and['or'];
+        }
+    }
 
     $sqllist = $db->query("SELECT SQL_CALC_FOUND_ROWS f.* $search_join_columns
         FROM $db_folio AS f $search_join_condition
         WHERE $where
         ORDER BY item_".$rs['foliosort']." ".$rs['foliosort2']."
         LIMIT $d, ".$cfg_maxitems
-            .$search_union_query);
+        .$search_union_query);
 
     $items = $sqllist->rowCount();
     $totalitems[] = $db->query('SELECT FOUND_ROWS()')->fetchColumn();
     $jj = 0;
-    
+
     $sqllist_rowset = $sqllist->fetchAll();
     $sqllist_idset = array();
-    foreach($sqllist_rowset as $item)
-    {
+    foreach ($sqllist_rowset as $item) {
         $sqllist_idset[$item['item_id']] = $item['item_alias'];
     }
-    
+
     /* === Hook - Part 1 === */
     $extp = cot_getextplugins('folio.search.loop');
     /* ===== */
-    foreach ($sqllist_rowset as $row)
-    {
+    foreach ($sqllist_rowset as $row) {
         $url_cat = cot_url('folio', 'c='.$row['item_cat']);
         $url_folio = empty($row['item_alias']) ? cot_url('folio', 'c='.$row['item_cat'].'&id='.$row['item_id'].'&highlight='.$hl) : cot_url('folio', 'c='.$row['item_cat'].'&al='.$row['item_alias'].'&highlight='.$hl);
         $t->assign(cot_generate_foliotags($row, 'PLUGIN_FOLIORES_'));
@@ -120,16 +121,14 @@ if ($cfg['folio']['foliosearch'] && ($tab == 'folio' || empty($tab)) && cot_modu
             'PLUGIN_FOLIORES_NUM' => $jj
         ));
         /* === Hook - Part 2 === */
-        foreach ($extp as $pl)
-        {
+        foreach ($extp as $pl) {
             include $pl;
         }
         /* ===== */
         $t->parse('MAIN.RESULTS.FOLIO.ITEM');
         $jj++;
     }
-    if ($jj > 0)
-    {
+    if ($jj > 0) {
         $t->parse('MAIN.RESULTS.FOLIO');
     }
     unset($where_and, $where_or, $where);
