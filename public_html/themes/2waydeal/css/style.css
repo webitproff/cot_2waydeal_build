@@ -5,7 +5,19 @@ body {
   margin: 0;
     transition: background-color 0.3s, color 0.3s;
 }
+@media (min-width: 1600px) {                         /* Применяется, когда ширина экрана >= 1600px */
+  .container-3xl {                                   /* Кастомный контейнер для очень широких экранов */
+    max-width: 1480px;                               /* Максимальная ширина контейнера — 1500px */
+  }
+}
 
+.container-3xl {                                     /* Базовые стили для контейнера */
+  width: 100%;                                       /* Растягивается на всю ширину до max-width */
+  padding-right: var(--bs-gutter-x, 0.75rem);        /* Правый отступ — как в Bootstrap (гуттер), по умолчанию 0.75rem */
+  padding-left: var(--bs-gutter-x, 0.75rem);         /* Левый отступ — тот же гуттер */
+  margin-right: auto;                                /* Горизонтальный авто-отступ — выравнивание по центру */
+  margin-left: auto;                                 /* То же самое, только слева */
+}
 /* Light mode customizations */
 [data-bs-theme="light"] {
     --bs-body-bg: #ffffff;
