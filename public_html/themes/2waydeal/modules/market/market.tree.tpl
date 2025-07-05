@@ -5,7 +5,7 @@
 		<a href="{HREF}" class="nav-link d-flex align-items-center" title="{PHP.L.All}">
 			<i class="fa-regular fa-folder me-2"></i>
 			<span>{PHP.L.All}</span>
-			<span class="ms-auto">({ROW_COUNT})</span>
+			<span class="ms-auto">({TOTAL_COUNT})</span>
 		</a>
 	</li>
 	<hr class="my-2">
