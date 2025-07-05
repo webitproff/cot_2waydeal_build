@@ -86,7 +86,7 @@ function cot_market_auth($cat = null)
 
 function cot_build_structure_market_tree($parent = '', $selected = '', $level = 0, $template = '')
 {
-	global $structure, $cfg, $db, $sys, $cot_extrafields, $db_structure;
+	global $structure, $cfg, $db, $sys, $cot_extrafields, $db_structure, $db_market;
 	global $i18n_notmain, $i18n_locale, $i18n_write, $i18n_admin, $i18n_read, $db_i18n_pages;
 
 	$urlparams = array();
@@ -130,7 +130,11 @@ function cot_build_structure_market_tree($parent = '', $selected = '', $level = 
 	{
 		return false;
 	}
-
+	$total_count = 0;
+	if ($db->tableExists($db_market)) {
+		$result = $db->query("SELECT COUNT(*) AS total FROM `$db_market` WHERE item_state = 0")->fetch();
+		$total_count = $result['total'] ?? 0;
+	}
     $title = '';
     $desc = '';
     $count = 0;
@@ -148,6 +152,7 @@ function cot_build_structure_market_tree($parent = '', $selected = '', $level = 
 		"ICON" => $icon,
 		"HREF" => cot_url("market", $urlparams + array('c' => $parent)),
 		"LEVEL" => $level,
+		"TOTAL_COUNT" => $total_count,
 	));
 
 	$jj = 0;
