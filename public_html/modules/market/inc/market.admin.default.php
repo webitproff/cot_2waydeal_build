@@ -135,7 +135,9 @@ if ($a == 'validate')
 		}
 	}
 
-$t = new XTemplate(cot_tplfile('market.admin.default', 'module'));
+$mskin = cot_tplfile(['market', 'admin', 'default'], 'module');
+
+$t = new XTemplate($mskin);
 
 $where = array();
 
