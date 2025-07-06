@@ -127,7 +127,9 @@ if (!empty($prd_arr) && in_array($mass_act, array('delete', 'validate'))) {
 		}
 }
 
-$t = new XTemplate(cot_tplfile('folio.admin.default', 'module'));
+$mskin = cot_tplfile(['folio', 'admin', 'default'], 'module');
+
+$t = new XTemplate($mskin);
 
 $where = array();
 
