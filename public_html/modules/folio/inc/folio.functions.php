@@ -265,7 +265,9 @@ function cot_generate_foliotags($item_data, $tag_prefix = '', $textlength = 0, $
 		$catpath = cot_breadcrumbs($patharray, $pagepath_home, true);
 
 		$text = cot_parse($item_data['item_text'], $cfg['folio']['markup'], $item_data['item_parser']);
-		$text_cut = ((int)$textlength > 0) ? cot_string_truncate($text, $textlength) : $text;
+		// $text_cut = ((int)$textlength > 0) ? cot_string_truncate($text, $textlength) : $text;
+		// Обрезает текст до заданной длины после удаления HTML-тегов и экранирования специальных символов для безопасного вывода в HTML
+		$text_cut = ((int)$textlength > 0) ? cot_string_truncate(htmlspecialchars(strip_tags($text), ENT_QUOTES, 'UTF-8'), $textlength) : $text;
 		
 		$item_data['item_status'] = cot_folio_status($item_data['item_state']);
 		
