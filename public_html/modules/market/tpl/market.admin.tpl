@@ -129,6 +129,6 @@
 </style>
 
 <div class="alert alert-info" role="alert">
-  market.admin.tpl
+  {PHP.mskin}
 </div>
 <!-- END: MAIN -->
