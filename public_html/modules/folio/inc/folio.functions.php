@@ -87,7 +87,7 @@ function cot_folio_auth($cat = null)
 
 function cot_build_structure_folio_tree($parent = '', $selected = '', $level = 0, $template = '')
 {
-	global $structure, $cfg, $db, $sys, $cot_extrafields, $db_structure;
+	global $structure, $cfg, $db, $sys, $cot_extrafields, $db_structure, $db_folio;
 	global $i18n_notmain, $i18n_locale, $i18n_write, $i18n_admin, $i18n_read, $db_i18n_pages;
 
 	$urlparams = array();
@@ -129,7 +129,11 @@ function cot_build_structure_folio_tree($parent = '', $selected = '', $level = 0
 	if (count($children) == 0) {
 		return false;
 	}
-
+	$total_count = 0;
+	if ($db->tableExists($db_folio)) {
+		$result = $db->query("SELECT COUNT(*) AS total FROM `$db_folio` WHERE item_state = 0")->fetch();
+		$total_count = $result['total'] ?? 0;
+	}
 	$t1->assign([
 		"TITLE" => !empty($parent) && isset($structure['folio'][$parent])
             ? htmlspecialchars($structure['folio'][$parent]['title'])
@@ -139,6 +143,7 @@ function cot_build_structure_folio_tree($parent = '', $selected = '', $level = 0
 		"ICON" => !empty($parent) && isset($structure['folio'][$parent]) ? $structure['folio'][$parent]['icon'] : '',
 		"HREF" => cot_url('folio', $urlparams + array('c' => $parent)),
 		"LEVEL" => $level,
+		"TOTAL_COUNT" => $total_count,
 	]);
 
 	/* === Hook - Part1 : Set === */
