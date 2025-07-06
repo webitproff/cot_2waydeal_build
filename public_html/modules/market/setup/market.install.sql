@@ -60,7 +60,7 @@ INSERT INTO `cot_auth` (`auth_groupid`, `auth_code`, `auth_option`, `auth_rights
 
 
 CREATE TABLE IF NOT EXISTS `cot_market` (
-  `item_id` int UNSIGNED NOT NULL,
+  `item_id` int UNSIGNED NOT NULL auto_increment,
   `item_userid` int UNSIGNED NOT NULL DEFAULT '0',
   `item_date` int UNSIGNED NOT NULL DEFAULT '0',
   `item_update` int UNSIGNED NOT NULL DEFAULT '0',
