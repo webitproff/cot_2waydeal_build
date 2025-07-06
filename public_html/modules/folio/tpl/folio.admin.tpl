@@ -1,82 +1,134 @@
 <!-- BEGIN: MAIN -->
-
 <h3>{PHP.L.folio}</h3>
 
-<div class="well">	
-	<form action="{SEARCH_ACTION_URL}" method="get">
+<div class="card filter-section p-3 mb-4" style="border: 5px var(--bs-dark-border-subtle) solid">
+	<form action="{SEARCH_ACTION_URL}" method="get" class="mb-3">
 		<input type="hidden" name="m" value="{PHP.m}" />
 		<input type="hidden" name="p" value="{PHP.p}" />
 		<input type="hidden" name="c" value="{PHP.c}" />
-		<table width="100%" cellpadding="5" cellspacing="0">
-			<tr>
-				<td width="100">{PHP.L.Search}:</td>
-				<td>{SEARCH_SQ}</td>
-			</tr>
-			<tr>
-				<td width="100">{PHP.L.Location}:</td>
-				<td>{SEARCH_LOCATION}</td>
-			</tr>
-			<tr>
-				<td >{PHP.L.Category}:</td>
-				<td>{SEARCH_CAT}</td>
-			</tr>
-			<tr>
-				<td>{PHP.L.Order}:</td>
-				<td>{SEARCH_SORTER}</td>
-			</tr>
-			<tr>
-				<td></td>
-				<td>{SEARCH_STATE}<br/></td>
-			</tr>
-			<tr>
-				<td></td>
-				<td><input type="submit" name="search" class="btn btn-success" value="{PHP.L.Search}" /></td>
-			</tr>
-		</table>		
+		<div class="row g-2 align-items-end">
+			<div class="col-12 col-lg-3 d-flex flex-column h-100">
+				<label class="form-label">{PHP.L.Search}</label>
+				<div class="flex-grow-1">{SEARCH_SQ}</div>
+			</div>
+			<!-- IF {PHP|cot_plugin_active('locationselector')} -->
+			<div class="col-12 col-lg-3 d-flex flex-column h-100">
+				<label class="form-label">{PHP.L.Location}</label>
+				<div class="flex-grow-1">{SEARCH_LOCATION}</div>
+			</div>
+			<!-- ENDIF -->
+			<div class="col-12 col-lg-3 d-flex flex-column h-100">
+				<label class="form-label">{PHP.L.Category}</label>
+				<div class="flex-grow-1">{SEARCH_CAT}</div>
+			</div>
+			<div class="col-12 col-lg-3 d-flex flex-column h-100">
+				<label class="form-label">{PHP.L.Order}</label>
+				<div class="flex-grow-1">{SEARCH_SORTER}</div>
+			</div>
+			<div class="col-12 col-lg-3 d-flex flex-column h-100">
+				<div class="flex-grow-1">{SEARCH_STATE}</div>
+			</div>
+			<div class="col-12 col-lg-3 d-flex flex-column h-100">
+				<button type="submit" name="search" class="btn btn-outline-primary w-100 mt-auto">
+					<i class="fa-solid fa-filter me-1"></i>{PHP.L.Search}
+				</button>
+			</div>
+		</div>
 	</form>
 </div>
 
 <form action="{PHP|cot_url('admin','m=folio'),'',true}" id="prd_form" method="POST">
-<div id="listfolio">
-	<!-- BEGIN: PRD_ROWS -->
-	<div class="media">
-		<!-- IF {PRD_ROW_MAVATAR.1} -->
-		<div class="pull-left">
-			<a href="{PRD_ROW_URL}"><div class="thumbnail"><img src="{PRD_ROW_MAVATAR.1|cot_mav_thumb($this, 100, 100, crop)}" /></div></a>
+	<div class="list-group list-group-flush">
+		<div class="list-group-item list-group-item-dark d-none d-lg-block">
+			<div class="row align-items-center fw-bold">
+				<div class="col-1 text-center"></div>
+				<div class="col-md-5">{PHP.L.Title}</div>
+				<div class="col-md-2">{PHP.L.Owner}</div>
+				<div class="col-md-2">{PHP.L.Category}</div>
+				<div class="col-md-2">{PHP.L.Action}</div>
+			</div>
 		</div>
-		<!-- ENDIF -->
-		<h4><!-- IF {PRD_ROW_COST} > 0 --><div class="cost pull-right">{PRD_ROW_COST} {PHP.cfg.payments.valuta}</div><!-- ENDIF --><a href="{PRD_ROW_URL}">{PRD_ROW_SHORTTITLE}</a></h4>
-		<label><input type="checkbox" name="prd_arr[]" value="{PRD_ROW_ID}">Отметить</label>
-		<div class="pull-right">
-			<!-- IF {PRD_ROW_STATE} == 2 -->
-			<a href="{PRD_ROW_VALIDATE_URL}" class="button btn btn-success">{PHP.L.Validate}</a>
-			<!-- ENDIF -->
-			<a href="{PRD_ROW_DELETE_URL}" class="button btn btn-warning">{PHP.L.Delete}</a>
+		<!-- BEGIN: PRD_ROWS -->
+		<div class="list-group-item list-group-item-action">
+			<div class="row align-items-center">
+				<div class="col-1 text-center">
+					<input type="checkbox" name="prd_arr[]" value="{PRD_ROW_ID}" class="form-check-input checkbox" /> #{PRD_ROW_ID}
+				</div>
+				<div class="col-md-5">
+					<div class="row align-items-center">
+						<div class="col-md-3 text-center text-md-start">
+							<!-- IF {PHP|cot_plugin_active('attacher')} -->
+							<!-- IF {PRD_ROW_ID|att_count('folio', $this, '', 'images')} > 0 -->
+							<div class="att-image">{PRD_ROW_ID|att_display('folio',$this,'','attacher.display.admin.list','images',1)}</div>
+							<!-- ELSE -->
+							<img src="{PHP.R.page_default_image}" alt="{PRD_ROW_SHORTTITLE}" class="img-thumbnail" style="width: 100px; height: 100px; max-width: none;">
+							<!-- ENDIF -->
+							<!-- ELSE -->
+							<img src="{PHP.R.page_default_image}" alt="{PRD_ROW_SHORTTITLE}" class="img-thumbnail" style="width: 100px; height: 100px; max-width: none;">
+							<!-- ENDIF -->
+						</div>
+						<div class="col-md-9">
+							<h4 class="fs-6 mb-1">
+								<!-- IF {PRD_ROW_COST} > 0 -->
+								<div class="cost float-end">{PRD_ROW_COST} {PHP.cfg.payments.valuta}</div>
+								<!-- ENDIF -->
+								<a href="{PRD_ROW_URL}" target="_blank">{PRD_ROW_SHORTTITLE}</a>
+							</h4>
+							<p class="text-secondary small mb-0">{PRD_ROW_SHORTTEXT}</p>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-2">
+					<div class="text-secondary small mb-0">{PRD_ROW_DATE}</div>
+					<p class="owner mb-0">{PRD_ROW_OWNER_NAME}</p>
+				</div>
+				<div class="col-md-2">
+					<p class="text-secondary mb-0"><a href="{PRD_ROW_CATURL}">{PRD_ROW_CATTITLE}</a></p>
+				</div>
+				<div class="col-md-2">
+					<div class="float-end d-flex flex-wrap gap-1">
+						<!-- IF {PRD_ROW_STATE} == 2 -->
+						<a href="{PRD_ROW_VALIDATE_URL}" class="button btn btn-sm btn-outline-success"><i class="fa-solid fa-check me-1"></i>{PHP.L.Validate}</a>
+						<!-- ENDIF -->
+						<a href="{PRD_ROW_DELETE_URL}" class="button btn btn-sm btn-outline-danger"><i class="fa-solid fa-trash me-1"></i>{PHP.L.Delete}</a> 
+						<a href="{PRD_ROW_ADMIN_EDIT_URL}" target="_blank" class="button btn btn-sm btn-outline-warning"><i class="fa-solid fa-pen me-1"></i>{PHP.L.Edit}</a>
+					</div>
+				</div>
+			</div>
 		</div>
-		<p class="owner">{PRD_ROW_OWNER_NAME} <span class="date">[{PRD_ROW_DATE}]</span> &nbsp;{PRD_ROW_COUNTRY} {PRD_ROW_REGION} {PRD_ROW_CITY} &nbsp; {PRD_ROW_ADMIN_EDIT}</p>		
-		<p class="text">{PRD_ROW_SHORTTEXT}</p>
-		<p class="type"><a href="{PRD_ROW_CATURL}">{PRD_ROW_CATTITLE}</a></p>
-	</div>
 		<!-- END: PRD_ROWS -->
-</div>	
-<hr>
-<div class="row">
-	<div class="span3">
-		<select name="prd_action" id="prd_action">
-			<option value="0">---</option>
-			<option value="delete">{PHP.L.Delete}</option>
-			<option value="validate">{PHP.L.Validate}</option>
-		</select>		
+		<div class="list-group-item mt-4">
+			<div class="row">
+				<div class="col-md-3">
+					<select name="prd_action" id="prd_action" class="form-select w-auto">
+						<option value="0">---</option>
+						<option value="delete">{PHP.L.Delete}</option>
+						<option value="validate">{PHP.L.Validate}</option>
+					</select>
+				</div>
+				<div class="col-md-9">
+					<button type="submit" class="btn btn-outline-primary">{PHP.L.Confirm}</button>
+				</div>
+			</div>
+		</div>
 	</div>
-	<div class="span9">
-		<button type="submit" class="btn btn-default">{PHP.L.Confirm}</button>
+	<hr>
+	<!-- IF {PAGENAV_COUNT} > 0 -->
+	<div class="pagination">
+		<ul>{PAGENAV_PAGES}</ul>
 	</div>
-</div>
+	<!-- ELSE -->
+	<div class="alert">{PHP.L.folio_notfound}</div>
+	<!-- ENDIF -->
+</form>
 
-<!-- IF {PAGENAV_COUNT} > 0 -->	
-<div class="pagination"><ul>{PAGENAV_PAGES}</ul></div>
-<!-- ELSE -->
-<div class="alert">{PHP.L.folio_notfound}</div>
-<!-- ENDIF -->
-</form>	
+<style scoped>
+	.filterSelect select {
+	width: 100%;
+	}
+</style>
+
+<div class="alert alert-info" role="alert">
+	{PHP.mskin}
+</div>
 <!-- END: MAIN -->
