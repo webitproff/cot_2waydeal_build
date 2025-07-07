@@ -31,7 +31,8 @@ $L['cfg_foliositemap_freq_params'] = $sitemap_freqs;
 $L['cfg_foliositemap_prio'] = 'Sitemap priority';
 $L['cfg_description'] = 'Description';
 $L['cfg_foliosearch'] = 'Include in global search';
-$L['cfg_notiffolio_admin_moderate'] = 'Notify about new portfolios for moderation,Send notification to system email about new portfolios awaiting moderation';
+$L['cfg_notiffolio_admin_moderate'] = 'Notify about new portfolios for moderation';
+$L['cfg_notiffolio_admin_moderate_hint'] = 'Send notification to system email about new portfolios awaiting moderation';
 $L['cfg_folioeditor'] = 'Select visual editor configuration';
 $L['cfg_folioeditor_params'] = 'Disabled,Minimal button set,Standard button set,Extended button set';
 $L['cfg_order'] = 'Sort order';
@@ -40,13 +41,13 @@ $L['cfg_way_hint'] = 'asc — ascending, desc — descending';
 
 $L['info_name'] = 'Portfolio';
 $L['info_desc'] = 'Publications of previously completed works and user achievements on the site';
-$L['info_notes'] = 'adapted to php >= 8.2+ & Bootstrap 5.3 by webitproff https://github.com/webitproff';
+$L['info_notes'] = 'adapted to php >= 8.3+ & Bootstrap 5.3 by webitproff https://github.com/webitproff';
 
-$L['folio_select_cat'] = "Select category";
-$L['folio_locked_cat'] = "Selected category is locked";
-$L['folio_empty_title'] = "Title cannot be empty";
-$L['folio_empty_text'] = "Description cannot be empty";
-$L['folio_large_img'] = "Image is too large";
+$L['folio_select_cat'] = 'Select category';
+$L['folio_locked_cat'] = 'Selected category is locked';
+$L['folio_empty_title'] = 'Title cannot be empty';
+$L['folio_empty_text'] = 'Description cannot be empty';
+$L['folio_large_img'] = 'Image is too large';
 
 $L['folio_forreview'] = 'Your work is under review. A moderator will approve its publication soon.';
 
@@ -95,4 +96,4 @@ $L['plu_folio_search_names'] = 'Search in titles';
 $L['plu_folio_search_text'] = 'Search in description';
 $L['plu_folio_set_subsec'] = 'Search in subcategories';
 
-$Ls['folio_headermoderated'] = "portfolio under review,portfolios under review,portfolios under review";
+$Ls['folio_headermoderated'] = 'portfolio under review,portfolios under review,portfolios under review';
