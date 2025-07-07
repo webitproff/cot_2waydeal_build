@@ -1,12 +1,12 @@
 <?php
 
 /**
- * folio module
+ * folio module localization folio.ru.lang.php
  *
  * @package folio
- * @version 3.0.0
+ * @version 3.0.1
  * @author CMSWorks Team
- * @copyright Copyright (c) CMSWorks.ru, littledev.ru | adapted 05 June 2025 to php >= 8.2+ & Bootstrap 5.3 by webitproff https://github.com/webitproff';
+ * @copyright Copyright (c) CMSWorks.ru, littledev.ru | adapted 07 July 2025 to php >= 8.3+ & Bootstrap 5.3 by webitproff https://github.com/webitproff';
  * @license BSD
  */
 
@@ -19,19 +19,19 @@ if (empty($sitemap_freqs)) {
 /**
  * Module Config
  */
-$L['cfg_pagelimit'] = array('Число записей в списках');
-$L['cfg_shorttextlen'] = array('Количество символов в списках');
-$L['cfg_prevalidate'] = array('Включить предварительную модерацию');
-$L['cfg_preview'] = array('Включить предварительный просмотр');
+$L['cfg_pagelimit'] = 'Число записей в списках';
+$L['cfg_shorttextlen'] = 'Количество символов в списках';
+$L['cfg_prevalidate'] = 'Включить предварительную модерацию';
+$L['cfg_preview'] = 'Включить предварительный просмотр';
 $L['cfg_title_folio'] = 'Заголовок страницы в браузере';
 $L['cfg_count_admin'] = 'Учитывать просмотры страницы администратором';
 $L['cfg_foliositemap'] = 'Включить в Sitemap';
 $L['cfg_foliositemap_freq'] = 'Частота изменения в Sitemap';
 $L['cfg_foliositemap_freq_params'] = $sitemap_freqs;
-$L['cfg_foliositemap_prio'] = array('Приоритет в Sitemap');
-$L['cfg_description'] = array('Description');
-$L['cfg_foliosearch'] = array('Включить в общий поиск');
-$L['cfg_notiffolio_admin_moderate'] = array('Уведомлять о новых портфолио на проверке','Отправка уведомления на системный email о новых портфолио на премодерации');
+$L['cfg_foliositemap_prio'] = 'Приоритет в Sitemap';
+$L['cfg_description'] = 'Description');
+$L['cfg_foliosearch'] = 'Включить в общий поиск';
+$L['cfg_notiffolio_admin_moderate'] = 'Уведомлять о новых портфолио на проверке','Отправка уведомления на системный email о новых портфолио на премодерации');
 $L['cfg_folioeditor'] = 'Выбор конфигурации визуального редактора';
 $L['cfg_folioeditor_params'] = 'Отключено,Минимальный набор кнопок,Стандартный набор кнопок,Расширенный набор кнопок'; 
 $L['cfg_order'] = 'Порядок сортировки';
