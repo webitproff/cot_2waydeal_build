@@ -20,7 +20,11 @@
         </div>
         <!-- IF {PHP.usr.auth_write} -->
         <div class="col-md-6 d-flex justify-content-center justify-content-md-end mt-3 mt-md-0">
-          <a class="btn btn-outline-secondary" href="{PHP|cot_url('market', 'm=add')}">{PHP.L.market_add_product}</a>
+			<!-- IF {PHP.c} -->
+			<a class="btn btn-outline-success" href="{PHP|cot_url('market', 'm=add', '&c={PHP.c}')}">{PHP.L.market_add_product}</a>
+			<!-- ELSE -->
+			<a class="btn btn-outline-secondary" href="{PHP|cot_url('market', 'm=add')}">{PHP.L.market_add_product}</a>
+			<!-- ENDIF -->
         </div>
         <!-- ENDIF -->
       </div>
