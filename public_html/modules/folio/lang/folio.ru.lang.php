@@ -41,7 +41,7 @@ $L['cfg_way_hint'] = 'asc — от меньшего к большему, desc �
 
 $L['info_name'] = 'Портфолио';
 $L['info_desc'] = 'Публикации ранее выполненных работ и достижений пользователей сайта';
-$L['info_notes'] = 'adapted to php >= 8.2+ & Bootstrap 5.3 by webitproff https://github.com/webitproff';
+$L['info_notes'] = 'adapted to php >= 8.3+ & Bootstrap 5.3 by webitproff https://github.com/webitproff';
 
 
 
