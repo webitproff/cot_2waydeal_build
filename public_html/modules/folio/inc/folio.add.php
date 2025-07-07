@@ -1,13 +1,14 @@
 <?php
 /**
- * folio module
+ * folio module add item. filename folio.add.php
  *
  * @package folio
- * @version 2.5.2
+ * @version 3.0.1
  * @author CMSWorks Team
- * @copyright Copyright (c) CMSWorks.ru, littledev.ru
+ * @copyright Copyright (c) CMSWorks.ru, littledev.ru | adapted 07 July 2025 to php >= 8.3+ & Bootstrap 5.3 by webitproff https://github.com/webitproff
  * @license BSD
  */
+
 
 // Проверяет, определена ли константа COT_CODE, чтобы предотвратить прямой доступ к файлу
 defined('COT_CODE') or die('Wrong URL');
@@ -222,8 +223,9 @@ $t->assign(array(
     // URL для отправки формы
     "PRDADD_FORM_SEND" => cot_url('folio', 'm=add&c=' . $c . '&a=add'),
     // Поле выбора категории
-	"PRDADD_FORM_CAT" => cot_folio_selectbox_structure_select2('folio', $ritem['item_cat'], 'rcat'),
-    //"PRDADD_FORM_CAT" => cot_selectbox_structure('folio', $ritem['item_cat'], 'rcat'), // old way, the basic implementation method. See system/form.php
+	"PRDADD_FORM_CAT_SELECT2" => cot_folio_selectbox_structure_select2('folio', $ritem['item_cat'], 'rcat'),
+	
+    "PRDADD_FORM_CAT" => cot_selectbox_structure('folio', $ritem['item_cat'], 'rcat'), // old way, the basic implementation method. See system/form.php
     // Название категории (или пустая строка)
     "PRDADD_FORM_CATTITLE" => (!empty($c) && isset($structure['folio'][$c])) ? $structure['folio'][$c]['title'] : '',
     // Поле ввода заголовка с экранированием
