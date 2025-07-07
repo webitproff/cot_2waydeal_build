@@ -1,12 +1,11 @@
 <?php
-
 /**
- * folio module
+ * folio module edit item. filename folio.edit.php
  *
  * @package folio
- * @version 2.5.2
+ * @version 3.0.1
  * @author CMSWorks Team
- * @copyright Copyright (c) CMSWorks.ru, littledev.ru
+ * @copyright Copyright (c) CMSWorks.ru, littledev.ru | adapted 07 July 2025 to php >= 8.3+ & Bootstrap 5.3 by webitproff https://github.com/webitproff
  * @license BSD
  */
 
@@ -260,8 +259,8 @@ cot_display_messages($t);
 $t->assign(array(
 	"PRDEDIT_FORM_SEND" => cot_url('folio', "m=edit&a=update&id=" . $item['item_id'] . "&r=" . $r),
 	"PRDEDIT_FORM_ID" => $item['item_id'],
-	"PRDEDIT_FORM_CAT" => cot_folio_selectbox_structure_select2('folio', $item['item_cat'], 'rcat'),
-	//"PRDEDIT_FORM_CAT" => cot_selectbox_structure('folio', $item['item_cat'], 'rcat'), // old way, the basic implementation method. See system/form.php
+	"PRDEDIT_FORM_CAT_SELECT2" => cot_folio_selectbox_structure_select2('folio', $item['item_cat'], 'rcat'),
+	"PRDEDIT_FORM_CAT" => cot_selectbox_structure('folio', $item['item_cat'], 'rcat'), // old way, the basic implementation method. See system/form.php
 	"PRDEDIT_FORM_CATTITLE" => $structure['folio'][$item['item_cat']]['title'],
 	"PRDEDIT_FORM_TITLE" => cot_inputbox('text', 'rtitle', $item['item_title'], 'size="56"'),	
 	"PRDEDIT_FORM_ALIAS" => cot_inputbox('text', 'ralias', $item['item_alias'], ['size' => '32', 'maxlength' => '255']),
