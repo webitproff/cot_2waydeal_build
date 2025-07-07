@@ -114,11 +114,13 @@
   </div>
   <hr>
   <!-- IF {PAGENAV_COUNT} > 0 -->
-  <div class="pagination">
-    <ul>{PAGENAV_PAGES}</ul>
-  </div>
+	<nav aria-label="Page Pagination" class="mt-3">
+	  <ul class="pagination justify-content-center">{PAGENAV_PREV} {PAGENAV_PAGES} {PAGENAV_NEXT}</ul>
+	</nav>
   <!-- ELSE -->
-  <div class="alert">{PHP.L.market_notfound}</div>
+	<div class="alert alert-info" role="alert">
+	  {PHP.L.market_notfound}
+	</div>  
   <!-- ENDIF -->
 </form>
 
