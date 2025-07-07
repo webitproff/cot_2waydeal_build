@@ -727,9 +727,125 @@ function cot_getmarketlist($template = 'index', $count = 5, $sqlsearch = '', $or
 }
 
 
+/**
+ * Renders structure dropdown for cot_market_selectbox_structure_select2 with Select2(https://select2.org/) support and indented subcategories
+ *
+ * @param string $extension Extension code
+ * @param string $check Selected value
+ * @param string $name Dropdown name
+ * @param string $subcat Show only subcats of selected category
+ * @param bool $hidePrivate Hide private categories
+ * @param bool $isModule TRUE for modules, FALSE for plugins
+ * @param bool $addEmpty Allow empty choice
+ * @param mixed $attrs Additional attributes as an associative array or a string
+ * @param string $customRC Custom resource string name
+ * @return string
+ */
+function cot_market_selectbox_structure_select2(
+    $extension,
+    $check,
+    $name,
+    $subcat = '',
+    $hidePrivate = true,
+    $isModule = true,
+    $addEmpty = false,
+    $attrs = '',
+    $customRC = ''
+) {
+    $categories = is_array(Cot::$structure[$extension]) ? Cot::$structure[$extension] : [];
+
+    $options = [];
+
+    foreach ($categories as $code => $category) {
+        $display = ($hidePrivate && $isModule) ? cot_auth($extension, $code, 'W') : true;
+
+        if ($display && !empty($subcat) && isset(Cot::$structure[$extension][$subcat])) {
+            $mtch = Cot::$structure[$extension][$subcat]['path'] . '.';
+            $mtchlen = mb_strlen($mtch);
+            $display = (mb_substr($category['path'], 0, $mtchlen) == $mtch || $code === $subcat);
+        }
+
+        if ((!$isModule || cot_auth($extension, $code, 'R')) && $code !== 'all' && $display) {
+            $depth = substr_count($category['path'], '.');
+            $selected = ($code === $check) ? ' selected' : '';
+            $attrs_str = is_array($attrs) ? cot_rc_attr_string($attrs) : $attrs;
+
+            $options[] = '<option value="' . htmlspecialchars($code) . '" data-depth="' . $depth . '"' . $selected . ' ' . $attrs_str . '>' .
+                         htmlspecialchars($category['title']) . '</option>';
+        }
+    }
+
+    if ($addEmpty) {
+        array_unshift($options, '<option value="">---</option>');
+    }
+
+    /* === Hook === */
+    foreach (cot_getextplugins('selectBox.structure') as $pl) {
+        include $pl;
+    }
+    /* ===== */
+
+    return '<select name="' . htmlspecialchars($name) . '" class="form-select">' . implode("\n", $options) . '</select>';
+}
 
 /**
- * Select market cat for search from
+ * Select market cat for search form. Используется с Select2 (https://select2.org/)
+ *
+ * @global array $structure
+ * @param string $check Selected category code
+ * @param string $name Name of the select input
+ * @param string $subcat Parent category code for filtering subcategories
+ * @param bool $hideprivate Hide private categories
+ * @return string
+ */
+function cot_market_selectcat_select2($check, $name, $subcat = '', $hideprivate = true)
+{
+    // Доступ к глобальной структуре категорий
+    global $structure;
+
+    // Проверяем, что массив категорий существует, иначе инициализируем пустым
+    $structure['market'] = is_array($structure['market']) ? $structure['market'] : [];
+
+    // Переменная для накопления всех option'ов
+    $options = '';
+
+    // Перебираем все категории в разделе 'market'
+    foreach ($structure['market'] as $i => $x) {
+        // Проверяем, разрешён ли просмотр категории (если нужно скрывать приватные)
+        $display = $hideprivate ? cot_auth('market', $i, 'R') : true;
+
+        // Если нужно фильтровать подкатегории, проверяем, входит ли текущая категория в фильтр
+        if ($display && !empty($subcat) && isset($structure['market'][$subcat])) {
+            // Формируем строку пути родительской категории с точкой на конце
+            $mtch = $structure['market'][$subcat]['path'] . ".";
+            // Длина этого пути
+            $mtchlen = mb_strlen($mtch);
+            // Проверяем, что путь текущей категории начинается с пути родителя или совпадает с ним
+            $display = (mb_substr($x['path'], 0, $mtchlen) == $mtch || $i === $subcat);
+        }
+
+        // Если есть права на чтение категории, она не "all" и подходит по фильтру
+        if (cot_auth('market', $i, 'R') && $i !== 'all' && $display) {
+            // Считаем глубину категории — количество точек в пути
+            $depth = substr_count($x['path'], '.');
+
+            // Определяем, выбрана ли эта категория в данный момент
+            $selected = ($i == $check) ? ' selected' : '';
+
+            // Формируем тег option с value, data-depth и текстом
+            $options .= '<option value="' . htmlspecialchars($i) . '" data-depth="' . $depth . '"' . $selected . '>' .
+                        htmlspecialchars($x['title']) . '</option>';
+        }
+    }
+
+    // Возвращаем полный select с классом Bootstrap
+    return '<select name="' . htmlspecialchars($name) . '" class="form-select">' . $options . '</select>';
+}
+
+
+
+/**
+ * Select market cat for search form. Old function!
  * 
  * @global array $structure
  * @param type $check
