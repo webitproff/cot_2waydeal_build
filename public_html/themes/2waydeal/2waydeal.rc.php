@@ -40,6 +40,7 @@ Resources::linkFileFooter(Cot::$cfg['themes_dir'] . '/' . Cot::$cfg['defaultthem
 
 
 
+
 if (Cot::$cfg['headrc_consolidate']) {
     Resources::addFile('lib/bootstrap/js/bootstrap.bundle.min.js');
 } else {
@@ -47,4 +48,5 @@ if (Cot::$cfg['headrc_consolidate']) {
 }
 
 Resources::addFile(Cot::$cfg['themes_dir'] . '/' . Cot::$cfg['defaulttheme'] . '/js/js.js');
+
 
