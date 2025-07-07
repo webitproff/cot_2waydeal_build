@@ -164,6 +164,7 @@ cot_display_messages($t);
 
 $t->assign(array(
 	"PRDADD_FORM_SEND" => cot_url('market', 'm=add&c='.$c.'&a=add'),
+	"PRDADD_FORM_CAT_SELECT2" => cot_market_selectbox_structure_select2('market', $ritem['item_cat'], 'rcat'),
 	"PRDADD_FORM_CAT" => cot_selectbox_structure('market', $ritem['item_cat'], 'rcat'),
 	"PRDADD_FORM_CATTITLE" => (!empty($c) && isset(cot::$structure['market'][$c])) ? cot::$structure['market'][$c]['title'] : '',
 	"PRDADD_FORM_TITLE" => cot_inputbox('text', 'rtitle', $ritem['item_title'], 'size="56"'),
