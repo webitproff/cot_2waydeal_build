@@ -1,15 +1,14 @@
 <?php
 
 /**
- * folio module
+ * folio module administation control panel. filename folio.admin.default.php
  *
  * @package folio
- * @version 3.0.0
+ * @version 3.0.1
  * @author CMSWorks Team
- * @copyright Copyright (c) CMSWorks.ru, littledev.ru | adapted 05 June 2025 to php >= 8.2+ & Bootstrap 5.3 by webitproff https://github.com/webitproff
+ * @copyright Copyright (c) CMSWorks.ru, littledev.ru | adapted 07 July 2025 to php >= 8.3+ & Bootstrap 5.3 by webitproff https://github.com/webitproff
  * @license BSD
  */
- 
 defined('COT_CODE') or die('Wrong URL');
 
 require_once cot_incfile('folio', 'module');
@@ -197,6 +196,7 @@ $t->assign(array(
 	"SEARCH_ACTION_URL" => cot_url('admin', "m=folio&c=".$c, '', true),
 	"SEARCH_SQ" => cot_inputbox('text', 'sq', $sq, 'class="schstring"'),
 	"SEARCH_STATE" => cot_radiobox($state, 'state', array(0, 1, 2), array('опубликованные', 'скрытые', 'на проверке')),
+	"SEARCH_CAT_SELECT2" => cot_folio_selectcat_select2($c, 'c'),
 	"SEARCH_CAT" => cot_folio_selectcat($c, 'c'),
 	"SEARCH_SORTER" => cot_selectbox($sort, "sort", array('', 'costasc', 'costdesc'), array($L['folio_mostrelevant'], $L['folio_costasc'], $L['folio_costdesc']), false),
 	'PAGENAV_PAGES' => $pagenav['main'],
