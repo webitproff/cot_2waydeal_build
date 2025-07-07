@@ -1,12 +1,15 @@
 <?php
+
 /**
- * Folio module
+ * folio module list items. filename folio.list.php
  *
  * @package folio
- * @author CMSWorks Team, Cotonti team
- * @copyright Copyright (c) CMSWorks.ru, littledev.ru, Cotonti team
+ * @version 3.0.1
+ * @author CMSWorks Team
+ * @copyright Copyright (c) CMSWorks.ru, littledev.ru | adapted 07 July 2025 to php >= 8.3+ & Bootstrap 5.3 by webitproff https://github.com/webitproff
  * @license BSD
  */
+ 
 
 list($usr['auth_read'], $usr['auth_write'], $usr['isadmin']) = cot_auth('folio', 'any', 'RWA');
 cot_block($usr['auth_read']);
@@ -138,6 +141,7 @@ $catpath = cot_breadcrumbs($catpatharray, $cfg['homebreadcrumb'], true);
 $t->assign(array(
 	"SEARCH_ACTION_URL" => cot_url('folio', '', '', true),
 	"SEARCH_SQ" => cot_inputbox('text', 'sq', htmlspecialchars($sq), 'class="schstring"'),
+	"SEARCH_CAT_SELECT2" => cot_folio_selectcat_select2($c, 'c'),
 	"SEARCH_CAT" => cot_folio_selectcat($c, 'c'),
 	"SEARCH_SORTER" => cot_selectbox($sort, "sort", array('', 'costasc', 'costdesc'), array($L['folio_mostrelevant'], $L['folio_costasc'], $L['folio_costdesc']), false),
 	"PAGENAV_PAGES" => $pagenav['main'],
