@@ -222,7 +222,8 @@ $t->assign(array(
     // URL для отправки формы
     "PRDADD_FORM_SEND" => cot_url('folio', 'm=add&c=' . $c . '&a=add'),
     // Поле выбора категории
-    "PRDADD_FORM_CAT" => cot_selectbox_structure('folio', $ritem['item_cat'], 'rcat'),
+	"PRDADD_FORM_CAT" => cot_folio_selectbox_structure_select2('folio', $ritem['item_cat'], 'rcat'),
+    //"PRDADD_FORM_CAT" => cot_selectbox_structure('folio', $ritem['item_cat'], 'rcat'), // old way, the basic implementation method. See system/form.php
     // Название категории (или пустая строка)
     "PRDADD_FORM_CATTITLE" => (!empty($c) && isset($structure['folio'][$c])) ? $structure['folio'][$c]['title'] : '',
     // Поле ввода заголовка с экранированием
