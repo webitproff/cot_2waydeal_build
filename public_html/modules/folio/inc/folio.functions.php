@@ -1,12 +1,12 @@
 <?php
 /**
- * folio module
- *
- * @package folio
- * @author CMSWorks Team
- * @copyright Copyright (c) CMSWorks.ru, littledev.ru
- * @license BSD
- */
+	* folio module
+	*
+	* @package folio
+	* @author CMSWorks Team
+	* @copyright Copyright (c) CMSWorks.ru, littledev.ru
+	* @license BSD
+*/
 
 defined('COT_CODE') or die('Wrong URL');
 
@@ -23,15 +23,15 @@ cot::$db->registerTable('folio');
 cot_extrafields_register_table('folio');
 
 cot::$structure['folio'] = (!empty(cot::$structure['folio']) && is_array(cot::$structure['folio'])) ?
-    cot::$structure['folio'] : [];
+cot::$structure['folio'] : [];
 
 /**
- * Update product categories counters
- *
- * @param string $cat Cat code
- * @return int
- * @global CotDB $db
- */
+	* Update product categories counters
+	*
+	* @param string $cat Cat code
+	* @return int
+	* @global CotDB $db
+*/
 function cot_folio_sync($cat)
 {
 	global $db, $db_structure, $db_folio, $cache;
@@ -52,13 +52,13 @@ function cot_folio_sync($cat)
 }
 
 /**
- * Update product category code
- *
- * @param string $oldcat Old Cat code
- * @param string $newcat New Cat code
- * @return bool
- * @global CotDB $db
- */
+	* Update product category code
+	*
+	* @param string $oldcat Old Cat code
+	* @param string $newcat New Cat code
+	* @return bool
+	* @global CotDB $db
+*/
 function cot_folio_updatecat($oldcat, $newcat)
 {
 	global $db, $db_structure, $db_folio;
@@ -67,10 +67,10 @@ function cot_folio_updatecat($oldcat, $newcat)
 
 
 /**
- * Returns permissions for a product category.
- * @param  string $cat Category code
- * @return array       Permissions array with keys: 'auth_read', 'auth_write', 'isadmin'
- */
+	* Returns permissions for a product category.
+	* @param  string $cat Category code
+	* @return array       Permissions array with keys: 'auth_read', 'auth_write', 'isadmin'
+*/
 function cot_folio_auth($cat = null)
 {
 	if (empty($cat))
@@ -89,16 +89,16 @@ function cot_build_structure_folio_tree($parent = '', $selected = '', $level = 0
 {
 	global $structure, $cfg, $db, $sys, $cot_extrafields, $db_structure, $db_folio;
 	global $i18n_notmain, $i18n_locale, $i18n_write, $i18n_admin, $i18n_read, $db_i18n_pages;
-
+	
 	$urlparams = array();
-
+	
 	/* === Hook === */
 	foreach (cot_getextplugins('folio.tree.first') as $pl)
 	{
 		include $pl;
 	}
 	/* ===== */
-
+	
 	if (empty($parent))
 	{
 		$i18n_enabled = $i18n_read;
@@ -116,16 +116,16 @@ function cot_build_structure_folio_tree($parent = '', $selected = '', $level = 0
 		$i18n_enabled = $i18n_read && cot_i18n_enabled($parent);
 		$children = $structure['folio'][$parent]['subcats'];
 	}
-
+	
 	$t1 = new XTemplate(cot_tplfile(array('folio', 'tree', $template), 'module'));
-
+	
 	/* === Hook === */
 	foreach (cot_getextplugins('folio.tree.main') as $pl)
 	{
 		include $pl;
 	}
 	/* ===== */
-
+	
 	if (count($children) == 0) {
 		return false;
 	}
@@ -135,50 +135,50 @@ function cot_build_structure_folio_tree($parent = '', $selected = '', $level = 0
 		$total_count = $result['total'] ?? 0;
 	}
 	$t1->assign([
-		"TITLE" => !empty($parent) && isset($structure['folio'][$parent])
-            ? htmlspecialchars($structure['folio'][$parent]['title'])
-            : '',
-		"DESC" => !empty($parent) && isset($structure['folio'][$parent]) ? $structure['folio'][$parent]['desc'] : '',
-		"COUNT" => !empty($parent) && isset($structure['folio'][$parent]) ? $structure['folio'][$parent]['count'] : '',
-		"ICON" => !empty($parent) && isset($structure['folio'][$parent]) ? $structure['folio'][$parent]['icon'] : '',
-		"HREF" => cot_url('folio', $urlparams + array('c' => $parent)),
-		"LEVEL" => $level,
-		"TOTAL_COUNT" => $total_count,
+	"TITLE" => !empty($parent) && isset($structure['folio'][$parent])
+	? htmlspecialchars($structure['folio'][$parent]['title'])
+	: '',
+	"DESC" => !empty($parent) && isset($structure['folio'][$parent]) ? $structure['folio'][$parent]['desc'] : '',
+	"COUNT" => !empty($parent) && isset($structure['folio'][$parent]) ? $structure['folio'][$parent]['count'] : '',
+	"ICON" => !empty($parent) && isset($structure['folio'][$parent]) ? $structure['folio'][$parent]['icon'] : '',
+	"HREF" => cot_url('folio', $urlparams + array('c' => $parent)),
+	"LEVEL" => $level,
+	"TOTAL_COUNT" => $total_count,
 	]);
-
+	
 	/* === Hook - Part1 : Set === */
 	$extp = cot_getextplugins('folio.tree.loop');
 	/* ===== */
-
-    $jj = 0;
+	
+	$jj = 0;
 	foreach ($children as $row) {
 		$jj++;
 		$urlparams['c'] = $row;
 		$subcats = !empty($structure['folio'][$row]['subcats']) ? $structure['folio'][$row]['subcats'] : [];
 		$t1->assign([
-			"ROW_ID" => $row, // Добавляем уникальный идентификатор (код категории)
-			"ROW_TITLE" => htmlspecialchars($structure['folio'][$row]['title']),
-			"ROW_DESC" => $structure['folio'][$row]['desc'],
-			"ROW_COUNT" => $structure['folio'][$row]['count'],
-			"ROW_ICON" => $structure['folio'][$row]['icon'],
-			"ROW_HREF" => cot_url("folio", $urlparams),
-			"ROW_SELECTED" => ((is_array($selected) && in_array($row, $selected)) || (!is_array($selected) && $row == $selected)) ? 1 : 0,
-			"ROW_SUBCAT" => (count($subcats) > 0) ? cot_build_structure_folio_tree($row, $selected, $level + 1) : '',
-			"ROW_LEVEL" => $level,
-			"ROW_ODDEVEN" => cot_build_oddeven($jj),
-			"ROW_JJ" => $jj,
+		"ROW_ID" => $row, // Добавляем уникальный идентификатор (код категории)
+		"ROW_TITLE" => htmlspecialchars($structure['folio'][$row]['title']),
+		"ROW_DESC" => $structure['folio'][$row]['desc'],
+		"ROW_COUNT" => $structure['folio'][$row]['count'],
+		"ROW_ICON" => $structure['folio'][$row]['icon'],
+		"ROW_HREF" => cot_url("folio", $urlparams),
+		"ROW_SELECTED" => ((is_array($selected) && in_array($row, $selected)) || (!is_array($selected) && $row == $selected)) ? 1 : 0,
+		"ROW_SUBCAT" => (count($subcats) > 0) ? cot_build_structure_folio_tree($row, $selected, $level + 1) : '',
+		"ROW_LEVEL" => $level,
+		"ROW_ODDEVEN" => cot_build_oddeven($jj),
+		"ROW_JJ" => $jj,
 		]);
 		
 		// Extra fields for structure
 		foreach ($cot_extrafields[$db_structure] as $exfld) {
 			$uname = strtoupper($exfld['field_name']);
 			$t1->assign(array(
-				'ROW_'.$uname.'_TITLE' => isset($L['structure_'.$exfld['field_name'].'_title']) ?  $L['structure_'.$exfld['field_name'].'_title'] : $exfld['field_description'],
-				'ROW_'.$uname => cot_build_extrafields_data('structure', $exfld, $structure['folio'][$row][$exfld['field_name']]),
-				'ROW_'.$uname.'_VALUE' => $structure['folio'][$row][$exfld['field_name']],
+			'ROW_'.$uname.'_TITLE' => isset($L['structure_'.$exfld['field_name'].'_title']) ?  $L['structure_'.$exfld['field_name'].'_title'] : $exfld['field_description'],
+			'ROW_'.$uname => cot_build_extrafields_data('structure', $exfld, $structure['folio'][$row][$exfld['field_name']]),
+			'ROW_'.$uname.'_VALUE' => $structure['folio'][$row][$exfld['field_name']],
 			));
 		}
-
+		
 		if ($i18n_enabled && $i18n_notmain){
 			$x_i18n = cot_i18n_get_cat($row, $i18n_locale);
 			if ($x_i18n){
@@ -186,20 +186,20 @@ function cot_build_structure_folio_tree($parent = '', $selected = '', $level = 0
 					$urlparams['l'] = $i18n_locale;
 				}
 				$t1->assign(array(
-					'ROW_URL' => cot_url('folio', $urlparams),
-					'ROW_TITLE' => $x_i18n['title'],
-					'ROW_DESC' => $x_i18n['desc'],
+				'ROW_URL' => cot_url('folio', $urlparams),
+				'ROW_TITLE' => $x_i18n['title'],
+				'ROW_DESC' => $x_i18n['desc'],
 				));
 			}
 		}
-
+		
 		/* === Hook - Part2 : Include === */
 		foreach ($extp as $pl)
 		{
 			include $pl;
 		}
 		/* ===== */
-
+		
 		$t1->parse("MAIN.CATS");
 	}
 	if ($jj == 0)
@@ -211,30 +211,30 @@ function cot_build_structure_folio_tree($parent = '', $selected = '', $level = 0
 }
 
 /**
- * Returns all product tags for coTemplate
- *
- * @param mixed $item_data product Info Array or ID
- * @param string $tag_prefix Prefix for tags
- * @param int $textlength Text truncate
- * @param bool $admin_rights product Admin Rights
- * @param bool $pagepath_home Add home link for page path
- * @param string $emptytitle Page title text if page does not exist
- * @return array
- * @global CotDB $db
- */
+	* Returns all product tags for coTemplate
+	*
+	* @param mixed $item_data product Info Array or ID
+	* @param string $tag_prefix Prefix for tags
+	* @param int $textlength Text truncate
+	* @param bool $admin_rights product Admin Rights
+	* @param bool $pagepath_home Add home link for page path
+	* @param string $emptytitle Page title text if page does not exist
+	* @return array
+	* @global CotDB $db
+*/
 function cot_generate_foliotags($item_data, $tag_prefix = '', $textlength = 0, $admin_rights = null,
-									 $pagepath_home = false, $emptytitle = '')
+$pagepath_home = false, $emptytitle = '')
 {
 	global $db, $cot_extrafields, $cfg, $L, $Ls, $R, $db_folio, $usr, $sys, $cot_yesno, $structure, $db_structure;
-
+	
 	static $extp_first = null, $extp_main = null;
-
+	
 	if (is_null($extp_first))
 	{
 		$extp_first = cot_getextplugins('foliotags.first');
 		$extp_main = cot_getextplugins('foliotags.main');
 	}
-
+	
 	/* === Hook === */
 	foreach ($extp_first as $pl)
 	{
@@ -246,61 +246,62 @@ function cot_generate_foliotags($item_data, $tag_prefix = '', $textlength = 0, $
 		$sql = $db->query("SELECT * FROM $db_folio WHERE item_id = '" . (int)$item_data . "' LIMIT 1");
 		$item_data = $sql->fetch();
 	}
-
+	
 	if ($item_data['item_id'] > 0 && !empty($item_data['item_title']))
 	{
 		if (is_null($admin_rights))
 		{
 			$admin_rights = cot_auth('folio', $item_data['item_cat'], 'A');
 		}
-
-
-
+		
+		
+		
 		$item_data['item_pageurl'] = (empty($item_data['item_alias'])) ? 
-			cot_url('folio', 'c='.$item_data['item_cat'].'&id='.$item_data['item_id']) : cot_url('folio', 'c='.$item_data['item_cat'].'&al='.$item_data['item_alias']);
+		cot_url('folio', 'c='.$item_data['item_cat'].'&id='.$item_data['item_id']) : cot_url('folio', 'c='.$item_data['item_cat'].'&al='.$item_data['item_alias']);
 		
 		$catpatharray[] = array(cot_url('folio'), $L['folio']);
 		$itempatharray[] = array($item_data['item_pageurl'], $item_data['item_title']);
-
+		
 		$patharray = array_merge($catpatharray, cot_structure_buildpath('folio', $item_data['item_cat']), $itempatharray);
-
+		
 		$itempath = cot_breadcrumbs($patharray, $pagepath_home, true);
-
+		
 		$patharray = array_merge($catpatharray, cot_structure_buildpath('folio', $item_data['item_cat']));
 		$catpath = cot_breadcrumbs($patharray, $pagepath_home, true);
-
+		
 		$text = cot_parse($item_data['item_text'], $cfg['folio']['markup'], $item_data['item_parser']);
-		// $text_cut = ((int)$textlength > 0) ? cot_string_truncate($text, $textlength) : $text;
-		// Обрезает текст до заданной длины после удаления HTML-тегов и экранирования специальных символов для безопасного вывода в HTML
+		
 		$text_cut = ((int)$textlength > 0) ? cot_string_truncate(htmlspecialchars(strip_tags($text), ENT_QUOTES, 'UTF-8'), $textlength) : $text;
+		
+		
 		
 		$item_data['item_status'] = cot_folio_status($item_data['item_state']);
 		
 		$temp_array = array(
-			'ID' => $item_data['item_id'],
-			'ALIAS' => $item_data['item_alias'],
-			'STATE' => $item_data['item_state'],
-			'STATUS' => $item_data['item_status'],
-			'LOCALSTATUS' => $L['folio_status_'.$item_data['item_status']],
-			'URL' => $item_data['item_pageurl'],
-			'USER_PRDURL' => cot_url('users', 'm=details&id=' . $item_data['item_userid'] . 
-                         (isset($item_data['user_name']) ? '&u=' . $item_data['user_name'] : '') . '&tab=folio'),
-			'TITLE' => $itempath,
-			'SHORTTITLE' => $item_data['item_title'],
-			'CAT' => $item_data['item_cat'],
-			'CATTITLE' => htmlspecialchars($structure['folio'][$item_data['item_cat']]['title']),
-			'CATURL' => cot_url('folio', 'c=' . $item_data['item_cat']),
-			'CATPATH' => $catpath,
-			'TEXT' => $text,
-			'SHORTTEXT' => $text_cut,
-			'COST' => (floor($item_data['item_cost']) != $item_data['item_cost']) ? number_format($item_data['item_cost'], '2', '.', ' ') : number_format($item_data['item_cost'], '0', '.', ' '),
-			'DATE' => cot_date('datetime_medium', $item_data['item_date']),
-			'DATE_STAMP' => $item_data['item_date'],
-			'SHOW_URL' => $item_data['item_pageurl'],
-			'COUNT' => $item_data['item_count'],
-			'USER_IS_ADMIN' => ($admin_rights || $usr['id'] == $item_data['item_userid']),
+		'ID' => $item_data['item_id'],
+		'ALIAS' => $item_data['item_alias'],
+		'STATE' => $item_data['item_state'],
+		'STATUS' => $item_data['item_status'],
+		'LOCALSTATUS' => $L['folio_status_'.$item_data['item_status']],
+		'URL' => $item_data['item_pageurl'],
+		'USER_PRDURL' => cot_url('users', 'm=details&id=' . $item_data['item_userid'] . 
+		(isset($item_data['user_name']) ? '&u=' . $item_data['user_name'] : '') . '&tab=folio'),
+		'TITLE' => $itempath,
+		'SHORTTITLE' => $item_data['item_title'],
+		'CAT' => $item_data['item_cat'],
+		'CATTITLE' => htmlspecialchars($structure['folio'][$item_data['item_cat']]['title']),
+		'CATURL' => cot_url('folio', 'c=' . $item_data['item_cat']),
+		'CATPATH' => $catpath,
+		'TEXT' => $text,
+		'SHORTTEXT' => $text_cut,
+		'COST' => (floor($item_data['item_cost']) != $item_data['item_cost']) ? number_format($item_data['item_cost'], '2', '.', ' ') : number_format($item_data['item_cost'], '0', '.', ' '),
+		'DATE' => cot_date('datetime_medium', $item_data['item_date']),
+		'DATE_STAMP' => $item_data['item_date'],
+		'SHOW_URL' => $item_data['item_pageurl'],
+		'COUNT' => $item_data['item_count'],
+		'USER_IS_ADMIN' => ($admin_rights || $usr['id'] == $item_data['item_userid']),
 		);
-
+		
 		if ($admin_rights || $usr['id'] == $item_data['item_userid'])
 		{
 			$temp_array['ADMIN_EDIT'] = cot_rc_link(cot_url('folio', 'm=edit&id=' . $item_data['item_id']), $L['Edit']);
@@ -318,7 +319,7 @@ function cot_generate_foliotags($item_data, $tag_prefix = '', $textlength = 0, $
 				$temp_array[$tag] = cot_build_extrafields_data('folio', $exfld, $item_data['item_' . $exfld['field_name']]);
 			}
 		}
-
+		
 		// Extra fields for structure
 		if (isset($cot_extrafields[$db_structure]))
 		{
@@ -327,10 +328,10 @@ function cot_generate_foliotags($item_data, $tag_prefix = '', $textlength = 0, $
 				$tag = mb_strtoupper($exfld['field_name']);
 				$temp_array['CAT_' . $tag . '_TITLE'] = isset($L['structure_' . $exfld['field_name'] . '_title']) ? $L['structure_' . $exfld['field_name'] . '_title'] : $exfld['field_description'];
 				$temp_array['CAT_' . $tag] = cot_build_extrafields_data('structure', $exfld,
-															$structure['folio'][$item_data['item_cat']][$exfld['field_name']]);
+				$structure['folio'][$item_data['item_cat']][$exfld['field_name']]);
 			}
 		}
-
+		
 		/* === Hook === */
 		foreach ($extp_main as $pl)
 		{
@@ -341,32 +342,32 @@ function cot_generate_foliotags($item_data, $tag_prefix = '', $textlength = 0, $
 	else
 	{
 		$temp_array = array(
-			'TITLE' => (!empty($emptytitle)) ? $emptytitle : $L['Deleted'],
-			'SHORTTITLE' => (!empty($emptytitle)) ? $emptytitle : $L['Deleted'],
+		'TITLE' => (!empty($emptytitle)) ? $emptytitle : $L['Deleted'],
+		'SHORTTITLE' => (!empty($emptytitle)) ? $emptytitle : $L['Deleted'],
 		);
 	}
-
+	
 	$return_array = array();
 	foreach ($temp_array as $key => $val)
 	{
 		$return_array[$tag_prefix . $key] = $val;
 	}
-
+	
 	return $return_array;
 }
 
 
 
 /**
- * Determines works status
- *
- * @param int $item_state
- * @return string 'hidden', 'moderated', 'published'
- */
+	* Determines works status
+	*
+	* @param int $item_state
+	* @return string 'hidden', 'moderated', 'published'
+*/
 function cot_folio_status($item_state)
 {
 	global $sys;
-
+	
 	if ($item_state == 0)
 	{
 		return 'published';
@@ -382,25 +383,25 @@ function cot_folio_status($item_state)
 
 
 /**
- * Returns possible values for category sorting order
- */
+	* Returns possible values for category sorting order
+*/
 function cot_folio_config_order()
 {
 	global $cot_extrafields, $L, $db_folio;
-
+	
 	$options_sort = array(
-		'id' => $L['Id'],
-		'title' => $L['Title'],
-		'text' => $L['Body'],
-		'userid' => $L['Owner'],
-		'date' => $L['Date']
+	'id' => $L['Id'],
+	'title' => $L['Title'],
+	'text' => $L['Body'],
+	'userid' => $L['Owner'],
+	'date' => $L['Date']
 	);
-
+	
 	foreach($cot_extrafields[$db_folio] as $exfld)
 	{
 		$options_sort[$exfld['field_name']] = isset($L['folio_'.$exfld['field_name'].'_title']) ? $L['folio_'.$exfld['field_name'].'_title'] : $exfld['field_description'];
 	}
-
+	
 	$L['cfg_order_params'] = array_values($options_sort);
 	return array_keys($options_sort);
 }
@@ -408,21 +409,21 @@ function cot_folio_config_order()
 
 
 /**
- * Imports product data from request parameters.
- * @param  string $source Source request method for parameters
- * @param  array  $ritem  Existing product data from database
- * @param  array  $auth   Permissions array
- * @return array          Product data
- */
+	* Imports product data from request parameters.
+	* @param  string $source Source request method for parameters
+	* @param  array  $ritem  Existing product data from database
+	* @param  array  $auth   Permissions array
+	* @return array          Product data
+*/
 function cot_folio_import($source = 'POST', $ritem = array(), $auth = array())
 {
 	global $cfg, $db_folio, $cot_extrafields, $usr, $sys;
-
+	
 	if (count($auth) == 0)
 	{
 		$auth = cot_folio_auth($ritem['item_cat']);
 	}
-
+	
 	if ($source == 'D' || $source == 'DIRECT')
 	{
 		// A trick so we don't have to affect every line below
@@ -430,7 +431,7 @@ function cot_folio_import($source = 'POST', $ritem = array(), $auth = array())
 		$_PATCH = $ritem;
 		$source = 'PATCH';
 	}
-
+	
 	$ritem['item_cat'] = cot_import('rcat', $source, 'TXT');
 	$ritem['item_title'] = cot_import('rtitle', $source, 'TXT');
 	$ritem['item_alias'] = cot_import('ralias', $source, 'TXT');
@@ -470,10 +471,10 @@ function cot_folio_import($source = 'POST', $ritem = array(), $auth = array())
 
 
 /**
- * Validates product data.
- * @param  array   $ritem Imported product data
- * @return boolean        TRUE if validation is passed or FALSE if errors were found
- */
+	* Validates product data.
+	* @param  array   $ritem Imported product data
+	* @return boolean        TRUE if validation is passed or FALSE if errors were found
+*/
 function cot_folio_validate($ritem)
 {
 	global $cfg, $structure;
@@ -484,22 +485,22 @@ function cot_folio_validate($ritem)
 	}
 	cot_check(mb_strlen($ritem['item_title']) < 2, 'folio_empty_title', 'rtitle');
 	cot_check(!empty($ritem['item_alias']) && preg_match('`[+/?%#&]`', $ritem['item_alias']), 'folio_aliascharacters', 'ralias');
-
+	
 	$allowemptytext = isset($cfg['folio']['cat_' . $ritem['item_cat']]['allowemptytext']) ?
-							$cfg['folio']['cat_' . $ritem['item_cat']]['allowemptytext'] : $cfg['folio']['cat___default']['allowemptytext'];
+	$cfg['folio']['cat_' . $ritem['item_cat']]['allowemptytext'] : $cfg['folio']['cat___default']['allowemptytext'];
 	cot_check(!$allowemptytext && empty($ritem['item_text']), 'folio_empty_text', 'rtext');
-
+	
 	return !cot_error_found();
 }
 
 
 
 /**
- * Adds a new product to the CMS.
- * @param  array   $ritem product data
- * @param  array   $auth  Permissions array
- * @return integer        New product ID or FALSE on error
- */
+	* Adds a new product to the CMS.
+	* @param  array   $ritem product data
+	* @param  array   $auth  Permissions array
+	* @return integer        New product ID or FALSE on error
+*/
 function cot_folio_add(&$ritem, $auth = array())
 {
 	global $cache, $cfg, $db, $db_folio, $db_structure, $structure, $L;
@@ -507,20 +508,20 @@ function cot_folio_add(&$ritem, $auth = array())
 	{
 		return false;
 	}
-
+	
 	if (count($auth) == 0)
 	{
 		$auth = cot_folio_auth($ritem['item_cat']);
 	}
 	
 	if(!$cfg['folio']['preview']){
-	$ritem['item_state'] = (!$cfg['folio']['prevalidate'] || $auth['isadmin']) ? 0 : 2;
+		$ritem['item_state'] = (!$cfg['folio']['prevalidate'] || $auth['isadmin']) ? 0 : 2;
 	}
 	else
 	{
 		$ritem['item_state'] = 1;
 	}
-
+	
 	if (!empty($ritem['item_alias']))
 	{
 		$prd_count = $db->query("SELECT COUNT(*) FROM $db_folio WHERE item_alias = ?", $ritem['item_alias'])->fetchColumn();
@@ -535,11 +536,11 @@ function cot_folio_add(&$ritem, $auth = array())
 		include $pl;
 	}
 	/* ===== */
-
+	
 	if ($db->insert($db_folio, $ritem))
 	{
 		$id = $db->lastInsertId();
-
+		
 		cot_extrafield_movefiles();
 	}
 	else
@@ -548,17 +549,17 @@ function cot_folio_add(&$ritem, $auth = array())
 	}
 	
 	cot_folio_sync($ritem['item_cat']);
-		
+	
 	/* === Hook === */
 	foreach (cot_getextplugins('folio.add.add.done') as $pl)
 	{
 		include $pl;
 	}
 	/* ===== */
-
+	
 	cot_shield_update(30, "r product");
 	cot_log("Add product #".$id, 'adm');
-
+	
 	return $id;
 }
 
@@ -566,11 +567,11 @@ function cot_folio_add(&$ritem, $auth = array())
 
 
 /**
- * Removes a product from the CMS.
- * @param  int     $id    Product ID
- * @param  array   $rpage Product data
- * @return boolean        TRUE on success, FALSE on error
- */
+	* Removes a product from the CMS.
+	* @param  int     $id    Product ID
+	* @param  array   $rpage Product data
+	* @return boolean        TRUE on success, FALSE on error
+*/
 function cot_folio_delete($id, $ritem = array())
 {
 	global $db, $db_folio, $db_structure, $cache, $cfg, $cot_extrafields, $structure, $L;
@@ -587,15 +588,15 @@ function cot_folio_delete($id, $ritem = array())
 			return false;
 		}
 	}
-
+	
 	foreach ($cot_extrafields[$db_folio] as $exfld)
 	{
 		cot_extrafield_unlinkfiles($ritem['item_' . $exfld['field_name']], $exfld);
 	}
-
+	
 	$db->delete($db_folio, "item_id = ?", $id);
 	cot_log("Deleted product #" . $id, 'adm');
-
+	
 	cot_folio_sync($ritem['item_cat']);
 	
 	/* === Hook === */
@@ -604,17 +605,17 @@ function cot_folio_delete($id, $ritem = array())
 		include $pl;
 	}
 	/* ===== */
-
+	
 	return true;
 }
 
 /**
- * Updates a product in the CMS.
- * @param  integer $id    Product ID
- * @param  array   $ritem Product data
- * @param  array   $auth  Permissions array
- * @return boolean        TRUE on success, FALSE on error
- */
+	* Updates a product in the CMS.
+	* @param  integer $id    Product ID
+	* @param  array   $ritem Product data
+	* @param  array   $auth  Permissions array
+	* @return boolean        TRUE on success, FALSE on error
+*/
 function cot_folio_update($id, &$ritem, $auth = array())
 {
 	global $cache, $cfg, $db, $db_folio, $db_structure, $structure, $L;
@@ -622,12 +623,12 @@ function cot_folio_update($id, &$ritem, $auth = array())
 	{
 		return false;
 	}
-
+	
 	if (count($auth) == 0)
 	{
 		$auth = cot_folio_auth($ritem['item_cat']);
 	}
-
+	
 	if (!empty($ritem['item_alias']))
 	{
 		$prd_count = $db->query("SELECT COUNT(*) FROM $db_folio WHERE item_alias = ? AND item_id != ?", array($ritem['item_alias'], $id))->fetchColumn();
@@ -636,7 +637,7 @@ function cot_folio_update($id, &$ritem, $auth = array())
 			$ritem['item_alias'] = $ritem['item_alias'].rand(1000, 9999);
 		}
 	}
-
+	
 	$item = $db->query("SELECT * FROM $db_folio WHERE item_id = ?", $id)->fetch();	
 	
 	if(!$cfg['folio']['preview']){
@@ -651,12 +652,12 @@ function cot_folio_update($id, &$ritem, $auth = array())
 	{
 		return false;
 	}
-
+	
 	cot_folio_sync($item['item_cat']);
 	cot_folio_sync($ritem['item_cat']);
 	
 	cot_extrafield_movefiles();
-
+	
 	/* === Hook === */
 	foreach (cot_getextplugins('folio.edit.update.done') as $pl)
 	{
@@ -670,7 +671,7 @@ function cot_folio_update($id, &$ritem, $auth = array())
 
 
 function cot_getfoliolist($template = 'index', $count = 5, $sqlsearch = '',
-							 $order = "item_date DESC")
+$order = "item_date DESC")
 {
 	global $db, $db_folio, $cfg, $db_users;
 	
@@ -682,7 +683,7 @@ function cot_getfoliolist($template = 'index', $count = 5, $sqlsearch = '',
 	
 	$sqllist = $db->query("SELECT * FROM $db_folio AS p LEFT JOIN $db_users AS u ON u.user_id=p.item_userid
 	WHERE item_state=0 $sqlsearch ORDER BY $order LIMIT " . (int)$count);
-
+	
 	$sqllist_rowset = $sqllist->fetchAll();
 	$sqllist_idset = array();
 	foreach($sqllist_rowset as $item)
@@ -695,55 +696,146 @@ function cot_getfoliolist($template = 'index', $count = 5, $sqlsearch = '',
 		$jj++;
 		$t->assign(cot_generate_usertags($item, 'PRD_ROW_OWNER_'));
 		$t->assign(cot_generate_foliotags($item, 'PRD_ROW_', $cfg['folio']['shorttextlen'],
-													$usr['isadmin'], $cfg['homebreadcrumb']));
+		$usr['isadmin'], $cfg['homebreadcrumb']));
 		$t->assign(array(
-			"PRD_ROW_ODDEVEN" => cot_build_oddeven($jj),
+		"PRD_ROW_ODDEVEN" => cot_build_oddeven($jj),
 		));
 		$t->parse("FOLIO.PRD_ROWS");
 	}
-
+	
 	$t->parse("FOLIO");
-
+	
 	return $t->text("FOLIO");
 }
 
 
+/**
+	* Renders structure dropdown for folio with Select2(https://select2.org/) support and indented subcategories
+	*
+	* @param string $extension Extension code
+	* @param string $check Selected value
+	* @param string $name Dropdown name
+	* @param string $subcat Show only subcats of selected category
+	* @param bool $hidePrivate Hide private categories
+	* @param bool $isModule TRUE for modules, FALSE for plugins
+	* @param bool $addEmpty Allow empty choice
+	* @param mixed $attrs Additional attributes as an associative array or a string
+	* @param string $customRC Custom resource string name
+	* @return string
+*/
+function cot_folio_selectbox_structure_select2(
+$extension,
+$check,
+$name,
+$subcat = '',
+$hidePrivate = true,
+$isModule = true,
+$addEmpty = false,
+$attrs = '',
+$customRC = ''
+) {
+	$categories = is_array(Cot::$structure[$extension]) ? Cot::$structure[$extension] : [];
+	
+	$categoryList = [];
+	foreach ($categories as $code => $category) {
+		$display = ($hidePrivate && $isModule) ? cot_auth($extension, $code, 'W') : true;
+		if ($display && !empty($subcat) && isset(Cot::$structure[$extension][$subcat])) {
+			$mtch = Cot::$structure[$extension][$subcat]['path'] . '.';
+			$mtchlen = mb_strlen($mtch);
+			$display = (mb_substr($category['path'], 0, $mtchlen) == $mtch || $code === $subcat);
+		}
+		
+		if ((!$isModule || cot_auth($extension, $code, 'R')) && $code !== 'all' && $display) {
+			$parents = explode('.', $category['path']);
+			$depth = count($parents) - 1;
+			$title = $category['title'];
+			$tpath = $depth > 0 ? str_repeat('├───', $depth - 1) . '├─' . $title : $title;
+			$categoryList[$code] = $tpath;
+		}
+	}
+	
+	/* === Hook === */
+	foreach (cot_getextplugins('selectBox.structure') as $pl) {
+		include $pl;
+	}
+	/* ===== */
+	
+	return cot_selectbox($check, $name, array_keys($categoryList), array_values($categoryList), $addEmpty, $attrs, $customRC);
+}
 
 /**
- * Select folio cat for search from
- * 
- * @global array $structure
- * @param type $check
- * @param type $name
- * @param type $subcat
- * @param type $hideprivate
- * @return string
- */
+	* Select folio cat for search form. This is new function for use with Select2 (https://select2.org/)
+	*
+	* @global array $structure
+	* @param string $check Selected category code
+	* @param string $name Name of the select input
+	* @param string $subcat Parent category code for filtering subcategories
+	* @param bool $hideprivate Hide private categories
+	* @return string
+*/
 function cot_folio_selectcat($check, $name, $subcat = '', $hideprivate = true)
 {
 	global $structure;
-
+	
 	$structure['folio'] = (is_array($structure['folio'])) ? $structure['folio'] : array();
-
+	
 	$result_array = array();
-	foreach ($structure['folio'] as $i => $x)
-	{
+	foreach ($structure['folio'] as $i => $x) {
 		$display = ($hideprivate) ? cot_auth('folio', $i, 'R') : true;
-		if ($display && !empty($subcat) && isset($structure['folio'][$subcat]))
-		{
-			$mtch = $structure['folio'][$subcat]['path'].".";
+		if ($display && !empty($subcat) && isset($structure['folio'][$subcat])) {
+			$mtch = $structure['folio'][$subcat]['path'] . ".";
 			$mtchlen = mb_strlen($mtch);
 			$display = (mb_substr($x['path'], 0, $mtchlen) == $mtch || $i === $subcat);
 		}
-
+		
 		if (cot_auth('folio', $i, 'R') && $i != 'all' && $display) {
-			$result_array[$i] = $x['tpath'];
+			$parents = explode('.', $x['path']);
+			$depth = count($parents) - 1;
+			$title = $x['title'];
+			$tpath = $depth > 0 ? str_repeat('├───', $depth - 1) . '├─' . $title : $title;
+			$result_array[$i] = $tpath;
 		}
 	}
-
-    return cot_selectbox($check, $name, array_keys($result_array), array_values($result_array), true);
+	
+	return cot_selectbox($check, $name, array_keys($result_array), array_values($result_array), true);
 }
+
+/**
+	* Select folio cat for search form. Old function!
+	* 
+	* @global array $structure
+	* @param type $check
+	* @param type $name
+	* @param type $subcat
+	* @param type $hideprivate
+	* @return string
+*/
+/* function cot_folio_selectcat($check, $name, $subcat = '', $hideprivate = true)
+	{
+	global $structure;
+	
+	$structure['folio'] = (is_array($structure['folio'])) ? $structure['folio'] : array();
+	
+	$result_array = array();
+	foreach ($structure['folio'] as $i => $x)
+	{
+	$display = ($hideprivate) ? cot_auth('folio', $i, 'R') : true;
+	if ($display && !empty($subcat) && isset($structure['folio'][$subcat]))
+	{
+	$mtch = $structure['folio'][$subcat]['path'].".";
+	$mtchlen = mb_strlen($mtch);
+	$display = (mb_substr($x['path'], 0, $mtchlen) == $mtch || $i === $subcat);
+	}
+	
+	if (cot_auth('folio', $i, 'R') && $i != 'all' && $display) {
+	$result_array[$i] = $x['tpath'];
+	}
+	}
+	
+	return cot_selectbox($check, $name, array_keys($result_array), array_values($result_array), true);
+	}
+*/
 
 if (!empty(cot::$cfg['folio']['markup']) && cot::$cfg['folio']['markup'] == 1) {
-  $folioeditor = isset(cot::$cfg['folio']['folioeditor']) ? cot::$cfg['folio']['folioeditor'] : null;
-}
+	$folioeditor = isset(cot::$cfg['folio']['folioeditor']) ? cot::$cfg['folio']['folioeditor'] : null;
+}	
