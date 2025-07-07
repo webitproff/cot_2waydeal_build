@@ -259,6 +259,7 @@ if (isset($r)) {
 $t->assign(array(
 	"PRDEDIT_FORM_SEND" => cot_url('market', $formSendParams),
 	"PRDEDIT_FORM_ID" => $item['item_id'],
+	"PRDEDIT_FORM_CAT_SELECT2" => cot_market_selectbox_structure_select2('market', $item['item_cat'], 'rcat'),
 	"PRDEDIT_FORM_CAT" => cot_selectbox_structure('market', $item['item_cat'], 'rcat'),
 	"PRDEDIT_FORM_CATTITLE" => $structure['market'][$item['item_cat']]['title'],
 	"PRDEDIT_FORM_TITLE" => cot_inputbox('text', 'rtitle', $item['item_title'], 'size="56"'),
