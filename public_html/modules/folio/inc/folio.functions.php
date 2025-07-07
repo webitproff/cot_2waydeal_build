@@ -1,12 +1,14 @@
 <?php
 /**
- * folio module
+ * folio module all functions. folio.functions.php
  *
  * @package folio
+ * @version 3.0.1
  * @author CMSWorks Team
- * @copyright Copyright (c) CMSWorks.ru, littledev.ru
+ * @copyright Copyright (c) CMSWorks.ru, littledev.ru | adapted 07 July 2025 to php >= 8.3+ & Bootstrap 5.3 by webitproff https://github.com/webitproff
  * @license BSD
  */
+ 
 
 defined('COT_CODE') or die('Wrong URL');
 
@@ -709,8 +711,9 @@ function cot_getfoliolist($template = 'index', $count = 5, $sqlsearch = '',
 }
 
 
+
 /**
- * Renders structure dropdown for folio with Select2(https://select2.org/) support and indented subcategories
+ * Renders structure dropdown for cot_folio_selectbox_structure_select2 with Select2(https://select2.org/) support and indented subcategories
  *
  * @param string $extension Extension code
  * @param string $check Selected value
@@ -736,9 +739,11 @@ function cot_folio_selectbox_structure_select2(
 ) {
     $categories = is_array(Cot::$structure[$extension]) ? Cot::$structure[$extension] : [];
 
-    $categoryList = [];
+    $options = [];
+
     foreach ($categories as $code => $category) {
         $display = ($hidePrivate && $isModule) ? cot_auth($extension, $code, 'W') : true;
+
         if ($display && !empty($subcat) && isset(Cot::$structure[$extension][$subcat])) {
             $mtch = Cot::$structure[$extension][$subcat]['path'] . '.';
             $mtchlen = mb_strlen($mtch);
@@ -746,12 +751,17 @@ function cot_folio_selectbox_structure_select2(
         }
 
         if ((!$isModule || cot_auth($extension, $code, 'R')) && $code !== 'all' && $display) {
-            $parents = explode('.', $category['path']);
-            $depth = count($parents) - 1;
-            $title = $category['title'];
-            $tpath = $depth > 0 ? str_repeat('├───', $depth - 1) . '├─' . $title : $title;
-            $categoryList[$code] = $tpath;
+            $depth = substr_count($category['path'], '.');
+            $selected = ($code === $check) ? ' selected' : '';
+            $attrs_str = is_array($attrs) ? cot_rc_attr_string($attrs) : $attrs;
+
+            $options[] = '<option value="' . htmlspecialchars($code) . '" data-depth="' . $depth . '"' . $selected . ' ' . $attrs_str . '>' .
+                         htmlspecialchars($category['title']) . '</option>';
         }
+    }
+
+    if ($addEmpty) {
+        array_unshift($options, '<option value="">---</option>');
     }
 
     /* === Hook === */
@@ -760,11 +770,11 @@ function cot_folio_selectbox_structure_select2(
     }
     /* ===== */
 
-    return cot_selectbox($check, $name, array_keys($categoryList), array_values($categoryList), $addEmpty, $attrs, $customRC);
+    return '<select name="' . htmlspecialchars($name) . '" class="form-select">' . implode("\n", $options) . '</select>';
 }
 
 /**
- * Select folio cat for search form. This is new function for use with Select2 (https://select2.org/)
+ * Select folio cat for search form. Используется с Select2 (https://select2.org/)
  *
  * @global array $structure
  * @param string $check Selected category code
@@ -773,32 +783,50 @@ function cot_folio_selectbox_structure_select2(
  * @param bool $hideprivate Hide private categories
  * @return string
  */
-function cot_folio_selectcat($check, $name, $subcat = '', $hideprivate = true)
+function cot_folio_selectcat_select2($check, $name, $subcat = '', $hideprivate = true)
 {
+    // Доступ к глобальной структуре категорий
     global $structure;
 
-    $structure['folio'] = (is_array($structure['folio'])) ? $structure['folio'] : array();
+    // Проверяем, что массив категорий существует, иначе инициализируем пустым
+    $structure['folio'] = is_array($structure['folio']) ? $structure['folio'] : [];
 
-    $result_array = array();
+    // Переменная для накопления всех option'ов
+    $options = '';
+
+    // Перебираем все категории в разделе 'folio'
     foreach ($structure['folio'] as $i => $x) {
-        $display = ($hideprivate) ? cot_auth('folio', $i, 'R') : true;
+        // Проверяем, разрешён ли просмотр категории (если нужно скрывать приватные)
+        $display = $hideprivate ? cot_auth('folio', $i, 'R') : true;
+
+        // Если нужно фильтровать подкатегории, проверяем, входит ли текущая категория в фильтр
         if ($display && !empty($subcat) && isset($structure['folio'][$subcat])) {
+            // Формируем строку пути родительской категории с точкой на конце
             $mtch = $structure['folio'][$subcat]['path'] . ".";
+            // Длина этого пути
             $mtchlen = mb_strlen($mtch);
+            // Проверяем, что путь текущей категории начинается с пути родителя или совпадает с ним
             $display = (mb_substr($x['path'], 0, $mtchlen) == $mtch || $i === $subcat);
         }
 
-        if (cot_auth('folio', $i, 'R') && $i != 'all' && $display) {
-            $parents = explode('.', $x['path']);
-            $depth = count($parents) - 1;
-            $title = $x['title'];
-            $tpath = $depth > 0 ? str_repeat('├───', $depth - 1) . '├─' . $title : $title;
-            $result_array[$i] = $tpath;
+        // Если есть права на чтение категории, она не "all" и подходит по фильтру
+        if (cot_auth('folio', $i, 'R') && $i !== 'all' && $display) {
+            // Считаем глубину категории — количество точек в пути
+            $depth = substr_count($x['path'], '.');
+
+            // Определяем, выбрана ли эта категория в данный момент
+            $selected = ($i == $check) ? ' selected' : '';
+
+            // Формируем тег option с value, data-depth и текстом
+            $options .= '<option value="' . htmlspecialchars($i) . '" data-depth="' . $depth . '"' . $selected . '>' .
+                        htmlspecialchars($x['title']) . '</option>';
         }
     }
 
-    return cot_selectbox($check, $name, array_keys($result_array), array_values($result_array), true);
+    // Возвращаем полный select с классом Bootstrap
+    return '<select name="' . htmlspecialchars($name) . '" class="form-select">' . $options . '</select>';
 }
+
 
 /**
  * Select folio cat for search form. Old function!
@@ -810,7 +838,7 @@ function cot_folio_selectcat($check, $name, $subcat = '', $hideprivate = true)
  * @param type $hideprivate
  * @return string
  */
-/* function cot_folio_selectcat($check, $name, $subcat = '', $hideprivate = true)
+function cot_folio_selectcat($check, $name, $subcat = '', $hideprivate = true)
 {
 	global $structure;
 
@@ -834,7 +862,7 @@ function cot_folio_selectcat($check, $name, $subcat = '', $hideprivate = true)
 
     return cot_selectbox($check, $name, array_keys($result_array), array_values($result_array), true);
 }
- */
+
  
 if (!empty(cot::$cfg['folio']['markup']) && cot::$cfg['folio']['markup'] == 1) {
   $folioeditor = isset(cot::$cfg['folio']['folioeditor']) ? cot::$cfg['folio']['folioeditor'] : null;
