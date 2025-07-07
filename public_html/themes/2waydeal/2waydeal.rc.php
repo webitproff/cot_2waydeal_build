@@ -18,6 +18,11 @@ Resources::addFile(Cot::$cfg['themes_dir'] . '/' . Cot::$cfg['defaulttheme'] . '
 
 Resources::addFile(Cot::$cfg['themes_dir'] . '/' . Cot::$cfg['defaulttheme'] . '/fontawesome/css/all.min.css', 'css', 200);
 
+Resources::addFile(Cot::$cfg['themes_dir'] . '/' . Cot::$cfg['defaulttheme'] . '/assets/select2/select2.min.css');
+Resources::addFile(Cot::$cfg['themes_dir'] . '/' . Cot::$cfg['defaulttheme'] . '/assets/select2/style-select2.css');
+Resources::addFile(Cot::$cfg['themes_dir'] . '/' . Cot::$cfg['defaulttheme'] . '/assets/select2/select2.min.js');
+Resources::addFile(Cot::$cfg['themes_dir'] . '/' . Cot::$cfg['defaulttheme'] . '/assets/select2/js-select2.js');
+
 Resources::addFile(Cot::$cfg['themes_dir'] . '/' . Cot::$cfg['defaulttheme'] . '/css/modalbox.css');
 Resources::addFile(Cot::$cfg['themes_dir'] . '/' . Cot::$cfg['defaulttheme'] . '/css/style.css');
 
@@ -32,8 +37,6 @@ Resources::linkFileFooter(Cot::$cfg['themes_dir'] . '/' . Cot::$cfg['defaultthem
 Resources::linkFileFooter(Cot::$cfg['themes_dir'] . '/' . Cot::$cfg['defaulttheme'] . '/assets/perfect-scrollbar/js-perfect-scrollbar.js'); 
 
 
-Resources::addFile(Cot::$cfg['themes_dir'] . '/' . Cot::$cfg['defaulttheme'] . '/assets/select2/select2.min.css');
-Resources::addFile(Cot::$cfg['themes_dir'] . '/' . Cot::$cfg['defaulttheme'] . '/assets/select2/select2.min.js');
 
 
 
@@ -44,5 +47,4 @@ if (Cot::$cfg['headrc_consolidate']) {
 }
 
 Resources::addFile(Cot::$cfg['themes_dir'] . '/' . Cot::$cfg['defaulttheme'] . '/js/js.js');
-
 
