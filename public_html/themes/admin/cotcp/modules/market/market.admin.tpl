@@ -19,7 +19,7 @@
 	  <!-- ENDIF -->
       <div class="col-12 col-lg-3 d-flex flex-column h-100">
         <label class="form-label">{PHP.L.Category}</label>
-        <div class="flex-grow-1">{SEARCH_CAT}</div>
+        <div class="flex-grow-1">{SEARCH_CAT_SELECT2}</div>
       </div>
       <div class="col-12 col-lg-3 d-flex flex-column h-100">
         <label class="form-label">{PHP.L.Order}</label>
