@@ -49,7 +49,7 @@
               <input type="hidden" name="l" value="{PHP.lang}" />
               <div class="row align-items-center">
                 <label class="col-12 col-sm-3 mb-2 mb-sm-0">{PHP.L.Category}:</label>
-                <div class="col-12 col-sm-9">{SEARCH_CAT}</div>
+                <div class="col-12 col-sm-9">{SEARCH_CAT_SELECT2} <!-- instead of SEARCH_CAT --></div>
               </div>
               <div class="row align-items-center">
                 <label class="col-12 col-sm-3 mb-2 mb-sm-0">{PHP.L.Search}:</label>
