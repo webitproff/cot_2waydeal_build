@@ -28,7 +28,7 @@
             <div class="mb-3 row">
               <label class="col-sm-3 col-form-label fw-semibold">{PHP.L.Category} <span class="text-danger">*</span></label>
               <div class="col-sm-9">
-                {PRDADD_FORM_CAT}
+                <!-- instead of PRDADD_FORM_CAT --> {PRDADD_FORM_CAT_SELECT2}
               </div>
             </div>
 
