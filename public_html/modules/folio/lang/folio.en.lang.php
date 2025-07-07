@@ -1,7 +1,7 @@
 <?php
 
 /**
- * folio module localization folio.ru.lang.php
+ * folio module localization folio.en.lang.php
  *
  * @package folio
  * @version 3.0.1
