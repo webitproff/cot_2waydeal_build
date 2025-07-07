@@ -1,0 +1,90 @@
+
+/* Основной контейнер для одиночного select2 (не multiple) */
+.select2-container--default .select2-selection--single {
+  background-color: var(--bs-body-bg, #fff); /* Цвет фона зависит от темы Bootstrap (по умолчанию — белый) */
+  border: 1px solid var(--bs-border-color, #ced4da); /* Граница: используем переменную Bootstrap или серый fallback */
+  border-radius: 0.375rem; /* Скруглённые углы (6px при rem=16px) */
+  padding: 0.375rem 0.75rem; /* Вертикальный и горизонтальный отступ внутри */
+  font-size: 1rem; /* Размер шрифта 16px */
+  line-height: 1.5; /* Межстрочный интервал — для вертикального выравнивания */
+  height: 38px; /* Фиксированная высота — согласована с input Bootstrap */
+  display: flex; /* Используем flexbox для выравнивания содержимого */
+  align-items: center; /* Вертикальное центрирование */
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out; /* Плавная анимация при фокусе */
+}
+
+/* Стили при фокусе на select2 (имитация Bootstrap input focus) */
+.select2-container--default .select2-selection--single:focus {
+  border-color: #86b7fe; /* Цвет рамки при фокусе (голубой Bootstrap) */
+  box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.25); /* Эффект свечения вокруг рамки */
+  outline: 0; /* Убираем дефолтную обводку */
+}
+
+/* Стили для текста выбранного значения в select2 */
+.select2-container--default .select2-selection--single .select2-selection__rendered {
+  color: var(--bs-body-color, #212529); /* Цвет текста — зависит от темы, по умолчанию почти чёрный */
+  line-height: 1.5; /* Центрируем текст по высоте */
+  padding-left: 0; /* Убираем лишние внутренние отступы */
+  padding-right: 0;
+  white-space: nowrap; /* Не переносим строку */
+  overflow: hidden; /* Обрезаем, если текст слишком длинный */
+  text-overflow: ellipsis; /* Добавляем троеточие */
+}
+
+/* Стрелочка справа (открытие списка) */
+.select2-container--default .select2-selection--single .select2-selection__arrow {
+  height: 100%; /* Занимает всю высоту блока */
+  right: 0.75rem; /* Смещена вправо на 12px */
+}
+
+/* Стили выпадающего списка */
+.select2-container--default .select2-results__options {
+  max-height: 50vh!important; /* Ограничение по высоте для прокрутки */
+  overflow-y: auto; /* Вертикальный скролл при переполнении */
+  background-color: var(--bs-body-bg, #fff); /* Фон списка из темы */
+  color: var(--bs-body-color, #212529); /* Цвет текста — по теме */
+}
+
+/* Подсветка пункта при наведении или клавиатурной навигации */
+.select2-container--default .select2-results__option--highlighted[aria-selected] {
+  background-color: var(--bs-link-hover-color, #FF5722); /* Цвет фона — оранжевый по умолчанию */
+  color: #fff; /* Белый текст для контраста */
+}
+
+/* Стили для родительских категорий в select2 (группы) */
+.select2-container--default .select2-results__group {
+  font-weight: bold; /* Делаем жирным текст родительских категорий */
+  padding: 0.375rem 0.75rem; /* Добавляем немного отступа */
+  color: var(--bs-body-color, #212529); /* Цвет текста — стандартный */
+  font-weight: bold;
+  background-color: var(--bs-sidebar-bg, #f8f9fa);
+}
+
+/* Тёмная тема — select2 контейнер */
+[data-bs-theme="dark"] .select2-container--default .select2-selection--single {
+  background-color: var(--bs-body-bg, #212529); /* Тёмный фон — из темы */
+  border-color: var(--bs-sidebar-border, #444); /* Цвет границы — тёмный */
+}
+
+/* Тёмная тема — текст выбранного элемента */
+[data-bs-theme="dark"] .select2-container--default .select2-selection--single .select2-selection__rendered {
+  color: var(--bs-body-color, #e9ecef); /* Светлый текст */
+}
+
+/* Тёмная тема — фон и цвет выпадающего списка */
+[data-bs-theme="dark"] .select2-container--default .select2-results__options {
+  background-color: var(--bs-body-bg, #212529); /* Тёмный фон */
+  color: var(--bs-body-color, #e9ecef); /* Светлый текст */
+}
+
+/* Тёмная тема — подсветка выбранного элемента в списке */
+[data-bs-theme="dark"] .select2-container--default .select2-results__option--highlighted[aria-selected] {
+  background-color: #343a40 !important; /* Чуть светлее фон для выделения */
+  color: #fff; /* Белый текст */
+}
+
+/* Тёмная тема — родительская категория (группа) */
+[data-bs-theme="dark"] .select2-container--default .select2-results__group {
+  font-weight: bold; /* Жирный шрифт сохраняется */
+  color: var(--bs-body-color, #e9ecef); /* Светлый текст в dark режиме */
+}
