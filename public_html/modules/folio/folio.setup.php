@@ -4,8 +4,8 @@
  * Code=folio
  * Name=Folio
  * Description=Портфолио
- * Version=3.0.0
- * Date=05 June 2025
+ * Version=3.0.1
+ * Date=07 July 2025
  * Author=CMSWorks Team, Cotonti team
  * Copyright=Copyright &copy; CMSWorks.ru, littledev.ru, Cotonti Team
  * Notes=
@@ -21,7 +21,7 @@
  * parser=02:callback:cot_get_parsers():html:* 
  * shorttextlen=03:string::200:Обрезка текста в категориях
  * prevalidate=04:radio::0:Включить предварительную модерацию
- * preview=05:radio::1:Включить предварительный просмотр
+ * preview=05:radio::0:Включить предварительный просмотр
  * foliositemap=06:radio::1:Включить вывод в sitemap
  * foliositemap_freq=07:select:default,always,hourly,daily,weekly,monthly,yearly,never:default:Частота изменений для sitemap
  * foliositemap_prio=08:select:0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0:0.5:Приоритет для sitemap
@@ -45,11 +45,11 @@
 */
 
 /**
- * Folio module
+ * Folio module 3.0.1
  *
  * @package folio
  * @author CMSWorks Team, Cotonti team
- * @copyright Copyright (c) CMSWorks.ru, littledev.ru, Cotonti Team
+ * @copyright Copyright (c) CMSWorks.ru, littledev.ru, Cotonti Team | adapted 07 July 2025 to php >= 8.3+ & Bootstrap 5.3 by webitproff https://github.com/webitproff
  * @license BSD
  */
 
