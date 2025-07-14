@@ -154,6 +154,29 @@
                                     <div class="text-muted fst-italic mt-2 small">{FORUMS_POSTS_ROW_UPDATEDBY}</div>
                                 <!-- ENDIF -->
                                 <div class="small text-muted mt-2">{FORUMS_POSTS_ROW_USER_TEXT}</div>
+							<!-- IF {PHP|cot_plugin_active('attacher')} -->
+                            <div class="col-12 mb-3">
+							<!-- IF {FORUMS_POSTS_ROW_ID|att_count('forums',$this)} > 0 -->
+							{FORUMS_POSTS_ROW_ID|att_count('forums',$this)}/{FORUMS_POSTS_ROW_ID|att_count('forums',$this,'','images')}/{FORUMS_POSTS_ROW_ID|att_count('forums',$this,'','files')}
+							<div class="col-12 mb-3">
+							<!-- IF {FORUMS_POSTS_ROW_ID|att_count('forums', $this, '', 'images')} > 0 -->
+							{FORUMS_POSTS_ROW_ID|att_display('forums',$this,'','attacher.display.forums.postsrow','images')}
+							<!-- ENDIF -->
+							<!-- IF {FORUMS_POSTS_ROW_ID|att_count('forums', $this, '', 'files')} > 0 -->
+							{FORUMS_POSTS_ROW_ID|att_downloads('forums',$this)}
+							<!-- ENDIF -->
+							</div>
+							<!-- ENDIF -->
+							<!-- IF {PHP|cot_auth('plug', 'attacher', 'W')} AND {FORUMS_POSTS_ROW_USER_ID} == {PHP.usr.id} -->
+							<div class="col-12 mb-3">
+							<label class="col-form-label fw-semibold">{PHP.L.att_add_pict_files}</label>
+							  <div class="input-group">
+								{FORUMS_POSTS_ROW_ID|att_filebox('forums', $this)}
+							  </div>
+							</div>
+							<!-- ENDIF -->
+                            </div>
+							<!-- ENDIF -->
                             </div>
                         </div>
                     </div>
