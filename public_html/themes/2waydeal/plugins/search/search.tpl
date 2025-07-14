@@ -1,3 +1,22 @@
+<!--
+/********************************************************************************
+ * File: search.tpl
+ * Extension: plugin 'search'
+ * Description: HTML template for the site search plugin, covering projects, market, folio, pages, forums, and comments. Supports filtering by various parameters.
+ * Compatibility: CMF/CMS Cotonti Siena v0.9.26 (https://github.com/Cotonti/Cotonti)
+ * Dependencies: Bootstrap 5.3.3 (https://getbootstrap.com/); Font Awesome Free 6.7.2 (https://fontawesome.com/)
+ * Theme: 2waydeal 
+ * Version: 1.0.3 
+ * Created: 07 March 2025 
+ * Updated: 14 July 2025 
+ * Author: webitproff 
+ * Source: https://github.com/webitproff/cot_2waydeal_build
+ * Demo: https://2waydeal.previewit.work/index.php?e=search&l=ru
+ * Help and support: https://abuyfile.com/ru/forums/cotonti/cot-2wd-build
+ * License: MIT  
+ ********************************************************************************/
+-->
+
 <!-- BEGIN: MAIN -->
 <div class="border-bottom border-secondary py-3 px-3">
   <nav aria-label="breadcrumb">
@@ -9,41 +28,34 @@
 <div class="min-height-50vh py-4 px-3">
   <ul class="nav nav-tabs search-areas" role="tablist">
     <li class="nav-item" role="presentation">
-      <a href="{PHP.sq|cot_url('search','sq=$this')}" class="nav-link 
-				<!-- IF {PHP.tab} == '' -->active
-				<!-- ENDIF -->" role="tab">{PHP.L.plu_tabs_all} </a>
+      <a href="{PHP.sq|cot_url('search','sq=$this')}" class="nav-link <!-- IF {PHP.tab} == '' -->active<!-- ENDIF -->" role="tab">{PHP.L.plu_tabs_all}</a>
     </li>
     <!-- IF {PHP.cfg.projects.prjsearch} -->
     <li class="nav-item" role="presentation">
-      <a href="{PHP.sq|cot_url('search','tab=projects&sq=$this')}" class="nav-link 
-				<!-- IF {PHP.tab} === 'projects' -->active
-				<!-- ENDIF -->" role="tab">{PHP.L.projects_projects} </a>
+      <a href="{PHP.sq|cot_url('search','tab=projects&sq=$this')}" class="nav-link <!-- IF {PHP.tab} === 'projects' -->active<!-- ENDIF -->" role="tab">{PHP.L.projects_projects}</a>
     </li>
     <!-- ENDIF -->
     <!-- IF {PHP.cfg.market.marketsearch} -->
     <li class="nav-item" role="presentation">
-      <a href="{PHP.sq|cot_url('search','tab=market&sq=$this')}" class="nav-link 
-				<!-- IF {PHP.tab} === 'market' -->active
-				<!-- ENDIF -->" role="tab">{PHP.L.market} </a>
+      <a href="{PHP.sq|cot_url('search','tab=market&sq=$this')}" class="nav-link <!-- IF {PHP.tab} === 'market' -->active<!-- ENDIF -->" role="tab">{PHP.L.market}</a>
     </li>
     <!-- ENDIF -->
     <!-- IF {PHP.cfg.folio.foliosearch} -->
     <li class="nav-item" role="presentation">
-      <a href="{PHP.sq|cot_url('search','tab=folio&sq=$this')}" class="nav-link 
-				<!-- IF {PHP.tab} === 'folio' -->active
-				<!-- ENDIF -->" role="tab">{PHP.L.folio} </a>
+      <a href="{PHP.sq|cot_url('search','tab=folio&sq=$this')}" class="nav-link <!-- IF {PHP.tab} === 'folio' -->active<!-- ENDIF -->" role="tab">{PHP.L.folio}</a>
     </li>
     <!-- ENDIF -->
     <li class="nav-item" role="presentation">
-      <a href="{PHP.sq|cot_url('search','tab=pag&sq=$this')}" class="nav-link 
-				<!-- IF {PHP.tab} === 'pag' -->active
-				<!-- ENDIF -->" role="tab">{PHP.L.Pages} </a>
+      <a href="{PHP.sq|cot_url('search','tab=pag&sq=$this')}" class="nav-link <!-- IF {PHP.tab} === 'pag' -->active<!-- ENDIF -->" role="tab">{PHP.L.Pages}</a>
     </li>
     <!-- IF {PHP|cot_module_active('forums')} -->
     <li class="nav-item" role="presentation">
-      <a href="{PHP.sq|cot_url('search','tab=frm&sq=$this')}" class="nav-link 
-				<!-- IF {PHP.tab} === 'frm' -->active
-				<!-- ENDIF -->" role="tab">{PHP.L.Forums} </a>
+      <a href="{PHP.sq|cot_url('search','tab=frm&sq=$this')}" class="nav-link <!-- IF {PHP.tab} === 'frm' -->active<!-- ENDIF -->" role="tab">{PHP.L.Forums}</a>
+    </li>
+    <!-- ENDIF -->
+    <!-- IF {PHP|cot_plugin_active('comments')} -->
+    <li class="nav-item" role="presentation">
+      <a href="{PHP.sq|cot_url('search','tab=com&sq=$this')}" class="nav-link <!-- IF {PHP.tab} === 'com' -->active<!-- ENDIF -->" role="tab">{PHP.L.comments_comments}</a>
     </li>
     <!-- ENDIF -->
   </ul>
@@ -204,8 +216,28 @@
         </div>
       </div>
       <!-- END: FORUMS_OPTIONS -->
+      <!-- BEGIN: COMMENTS_OPTIONS -->
+      <h3>{PHP.L.comments_comments}</h3>
+      <div class="card mb-4">
+        <div class="card-body">
+          <div class="row g-3">
+            <div class="col-12 col-md-6">
+              <p class="fw-bold">{PHP.L.plu_com_set_area}:</p>
+              <div>{PLUGIN_COMMENT_SEC_LIST}</div>
+              <div class="small">{PHP.L.plu_ctrl_list}</div>
+            </div>
+            <div class="col-12 col-md-6">
+              <p class="fw-bold">{PHP.L.plu_res_sort}:</p>
+              <div>{PLUGIN_COMMENT_RES_SORT}</div>
+              <div>{PLUGIN_COMMENT_RES_SORT_WAY}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- END: COMMENTS_OPTIONS -->
     </div>
-  </form> {FILE "{PHP.cfg.themes_dir}/{PHP.cfg.defaulttheme}/warnings.tpl"}
+  </form>
+  {FILE "{PHP.cfg.themes_dir}/{PHP.cfg.defaulttheme}/warnings.tpl"}
   <!-- BEGIN: RESULTS -->
   <!-- BEGIN: PROJECTS -->
   <h3>{PHP.L.projects_projects}</h3>
@@ -235,7 +267,7 @@
     <div class="list-group-item list-group-item-action {PLUGIN_MARKETRES_ODDEVEN}">
       <div>{PLUGIN_MARKETRES_TITLE}</div>
       <div class="small text-secondary">{PLUGIN_MARKETRES_TEXT}</div>
-      <div class="row g-2">
+      <div class="row g-3">
         <div class="col-12 col-md-6">
           <p class="small">{PHP.L.plu_last_date}: {PLUGIN_MARKETRES_TIME}</p>
         </div>
@@ -314,6 +346,28 @@
     <!-- END: ITEM -->
   </div>
   <!-- END: FORUMS -->
+  <!-- BEGIN: COMMENTS -->
+  <h3>{PHP.L.comments_comments}</h3>
+  <p>{PHP.L.plu_result}: {PHP.L.plu_tabs_com}</p>
+  <div class="list-group list-group-striped list-group-flush mb-4">
+    <!-- BEGIN: ITEM -->
+    <div class="list-group-item list-group-item-action {PLUGIN_CM_ODDEVEN}">
+      <div>{PLUGIN_CM_AUTHOR_LINK}</div>
+      <!-- IF {PLUGIN_CM_TEXT} -->
+      <div class="small text-secondary">{PLUGIN_CM_TEXT}</div>
+      <!-- ENDIF -->
+      <div class="row g-2">
+        <div class="col-12 col-md-6">
+          <p class="small">{PHP.L.plu_last_date}: {PLUGIN_CM_TIME}</p>
+        </div>
+        <div class="col-12 col-md-6 text-md-end">
+          <p class="small">{PLUGIN_CM_LINK}</p>
+        </div>
+      </div>
+    </div>
+    <!-- END: ITEM -->
+  </div>
+  <!-- END: COMMENTS -->
   <!-- END: RESULTS -->
   <!-- IF {PAGINATION} -->
   <nav aria-label="pagination">
@@ -329,14 +383,3 @@
 </div>
 <!-- ENDIF -->
 <!-- END: MAIN -->
-
-если нужно получить только категорию, а не хлебные крошки, в которой, находится искомый элемент поиска из модуля форумов:
-используем:
-
-<!-- IF {PLUGIN_FR_CATEGORY_SHORT} -->
-<p class="small">{PHP.L.plu_section}: {PLUGIN_FR_CATEGORY_SHORT}</p>
-<!-- ENDIF --> 
-открываем /plugins/search/search.php и в районе 586-й строки, после 
-'PLUGIN_FR_CATEGORY' => cot_breadcrumbs(cot_forums_buildpath($row['ft_cat']), false, false), 
-добавляем: 
-'PLUGIN_FR_CATEGORY_SHORT' => isset(Cot::$structure['forums'][$row['ft_cat']]['title']) ? cot_rc_link(cot_url('forums', 'm=topics&s=' . $row['ft_cat']), htmlspecialchars(Cot::$structure['forums'][$row['ft_cat']]['title'])) : '', 
