@@ -36,25 +36,18 @@
 }
 </style>
 
-<div id="container-carousel" class="carousel slide " data-bs-ride="true">
-  <div class="carousel-inner rounded-5 shadow-bottom">
-<!-- BEGIN: ATTACHER_ROW -->
-    <div class="carousel-item <!-- IF {ATTACHER_ROW_NUM} == '1' --> active<!-- ENDIF -->">
+<div class="row row-cols-2 row-cols-md-3 row-cols-lg-5 g-2 justify-content-center">
+
+  <!-- BEGIN: ATTACHER_ROW -->
+    <div class="col">
       	<a data-fancybox="gallery" data-src="{ATTACHER_ROW_URL}" data-caption="{ATTACHER_ROW_TITLE}">
-	  <img src="{ATTACHER_ROW_URL}" alt="{ATTACHER_ROW_TITLE} - {ATTACHER_ROW_FILENAME}" title="{ATTACHER_ROW_TITLE} - {ATTACHER_ROW_FILENAME}"  class="img-fluid rounded" style="aspect-ratio: 1/1; object-fit: cover;">
+	  <img src="{ATTACHER_ROW_ID|att_thumb($this,300,300,'crop')}" alt="{ATTACHER_ROW_TITLE} - {ATTACHER_ROW_FILENAME}" title="{ATTACHER_ROW_TITLE} - {ATTACHER_ROW_FILENAME}"  class="img-fluid rounded" style="aspect-ratio: 1/1; object-fit: cover;">
 	</a>
     </div>
   <!-- END: ATTACHER_ROW -->
 
-  </div>
-  <button class="carousel-control-prev" type="button" data-bs-target="#container-carousel" data-bs-slide="prev">
-    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-    <span class="visually-hidden">Previous</span>
-  </button>
-  <button class="carousel-control-next" type="button" data-bs-target="#container-carousel" data-bs-slide="next">
-    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-    <span class="visually-hidden">Next</span>
-  </button>
+
+
 </div>
 
 
@@ -79,3 +72,4 @@
     </script>
 
 <!-- END: MAIN -->
+
