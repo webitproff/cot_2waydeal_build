@@ -383,3 +383,5 @@
 </div>
 <!-- ENDIF -->
 <!-- END: MAIN -->
+Как убрать Хлебные крошки вместо ссылки на категорию форума в результатах поиска
+https://abuyfile.com/ru/forums/cotonti/custom/lifehack/topic136
