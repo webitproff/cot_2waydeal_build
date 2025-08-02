@@ -1,5 +1,5 @@
 # Скрипт торговой площадки фриланс услуг #
-## Обновленная стартовая сборка фриланс-биржи на Cotonti CMF v.0.9.26, совместимая с PHP 8.3, от 07.07.2025 ##
+## Обновленная стартовая сборка фриланс-биржи на Cotonti CMF v.0.9.26, совместимая с PHP 8.4, от 07.07.2025 ##
 
 [Демонстрация сайта](https://2waydeal.previewit.work/)
 
@@ -7,7 +7,7 @@
 
 # Freelance Marketplace Script
 
-## Updated starter build of a freelance exchange platform on Cotonti CMF v0.9.26, compatible with PHP 8.3 (as of July 7, 2025)
+## Updated starter build of a freelance exchange platform on Cotonti CMF v0.9.26, compatible with PHP 8.4 (as of July 7, 2025)
 
 [Live Demo](https://2waydeal.previewit.work/)
 
